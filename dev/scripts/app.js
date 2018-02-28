@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import config from './components/config.js';
+import Splash from './components/splash';
+import Nav from './components/nav';
 import {
   BrowserRouter as Router,
   Route,
@@ -34,7 +36,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        
+        <Splash />
+        <Nav />
       </div>
     )
   }
