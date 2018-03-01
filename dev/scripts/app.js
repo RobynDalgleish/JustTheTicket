@@ -31,6 +31,19 @@ class App extends React.Component {
         movies: data.results
       })
     });
+
+    //MovieDB Call
+    axios.get(`${config.movieApiURL}/movie/now_playing`, {
+      params: {
+        api_key: config.movieApiKey
+      }
+    })
+      .then(({ data }) => {
+        console.log(data);
+        this.setState({
+          movies: data.results
+        })
+      });
   }
 
   
