@@ -3,6 +3,7 @@ import TopFive from './topFive';
 import config from './config'
 import axios from 'axios';
 
+
 class GenreDropDown extends React.Component{
 
     constructor() {
@@ -33,7 +34,7 @@ class GenreDropDown extends React.Component{
         return(
             <div>
                 <h1>GenreDropDown drpdownnnnn</h1>
-                <TopFive />
+                {/* link to Search Results */}
             </div>
         )
     }
