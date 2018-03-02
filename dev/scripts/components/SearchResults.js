@@ -75,13 +75,11 @@ class SearchResults extends React.Component {
                 {this.state.genreMoviesPlaying.length !== 0 ?
                     this.state.genreMoviesPlaying.map((movie, i) => {
                         return (
-                            <Link to={`/movie/284054`}>
                                 <div key={this.state.genreMoviesPlaying[i].id}>
                                     <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`}
                                         alt={`Poster for ${this.state.genreMoviesPlaying[i].title}`} />
                                     <h1>{this.state.genreMoviesPlaying[i].title}</h1>
                                 </div>
-                            </Link>
                         )
                     })
                     : null}
