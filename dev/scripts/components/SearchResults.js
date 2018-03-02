@@ -65,7 +65,8 @@ class SearchResults extends React.Component{
                 <Nav />
 
                 {/* Ternary operator only posts the movie info to the page
-                after the data has been brought in from axios */}
+                after the data has been brought in from axios 
+                We need to figure out how to link this to /movie/:movie_id*/}
                 {this.state.genreMoviesPlaying.length !== 0 ?
 
                     this.state.genreMoviesPlaying.map((movie, i) => {
