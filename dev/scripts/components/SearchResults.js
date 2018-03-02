@@ -2,6 +2,7 @@ import React from 'react';
 import Nav from './nav';
 import axios from 'axios';
 import config from './config.js';
+import {Link} from 'react-router-dom';
 class SearchResults extends React.Component {
     constructor() {
         super();
@@ -10,24 +11,24 @@ class SearchResults extends React.Component {
             genreMoviesPlaying: [],
             page: 1,
         }
-        this.getOnePage = this.getOnePage.bind(this);
+        // this.getOnePage = this.getOnePage.bind(this);
     }
 
-    getOnePage(i) {
-        axios.get(`${config.movieApiURL}/movie/now_playing`, {
-            params: {
-                api_key: config.movieApiKey,
-                page: i
-            }
-        })
-            .then(({ data }) => {
-                console.log(data);
-                const moviesPlaying = data.results;
-                const genreCodeNum = parseInt(this.props.match.params.genre_id);
-                const newNewArray = moviesPlaying.filter(movie => movie.genre_ids.includes(genreCodeNum));
-                newArray.push(newNewArray)
-            })
-    }
+    // getOnePage(i) {
+    //     axios.get(`${config.movieApiURL}/movie/now_playing`, {
+    //         params: {
+    //             api_key: config.movieApiKey,
+    //             page: i
+    //         }
+    //     })
+    //         .then(({ data }) => {
+    //             console.log(data);
+    //             const moviesPlaying = data.results;
+    //             const genreCodeNum = parseInt(this.props.match.params.genre_id);
+    //             const newNewArray = moviesPlaying.filter(movie => movie.genre_ids.includes(genreCodeNum));
+    //             newArray.push(newNewArray)
+    //         })
+    // }
 
     componentDidMount() {
         //Gets the NOW PLAYING movies sorted most popular first
@@ -49,14 +50,15 @@ class SearchResults extends React.Component {
                 // for loop to check right after
                 // if it's true it'll make the second call......
 
-                for (let i = 2; newArray.length < 5; i++) {
-                this.getOnePage(i);
+                // for (let i = 2; newArray.length < 5; i++) {
+                // this.getOnePage(i);
                 // console.log('We need More');
-                }
+                // }
                 //Now we take the new filtered array and set it to the state as genreMoviesPlaying
-                // this.setState({
-                //     genreMoviesPlaying: newArray,
-                // })
+                this.setState({
+                    genreMoviesPlaying: newArray,
+                })
+                
 
             });
     }
@@ -73,11 +75,13 @@ class SearchResults extends React.Component {
                 {this.state.genreMoviesPlaying.length !== 0 ?
                     this.state.genreMoviesPlaying.map((movie, i) => {
                         return (
-                            <div key={this.state.genreMoviesPlaying[i].id}>
-                                <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`}
-                                    alt={`Poster for ${this.state.genreMoviesPlaying[i].title}`} />
-                                <h1>{this.state.genreMoviesPlaying[i].title}</h1>
-                            </div>
+                            <Link to={`/movie/284054`}>
+                                <div key={this.state.genreMoviesPlaying[i].id}>
+                                    <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`}
+                                        alt={`Poster for ${this.state.genreMoviesPlaying[i].title}`} />
+                                    <h1>{this.state.genreMoviesPlaying[i].title}</h1>
+                                </div>
+                            </Link>
                         )
                     })
                     : null}
