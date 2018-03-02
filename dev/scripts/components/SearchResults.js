@@ -2,6 +2,7 @@ import React from 'react';
 import Nav from './nav';
 import axios from 'axios';
 import config from './config.js';
+import { Link } from 'react-router-dom';
 
 class SearchResults extends React.Component {
     constructor() {
@@ -64,11 +65,14 @@ class SearchResults extends React.Component {
                 {this.state.fiveGenreMoviesPlaying.length !== 0 ?
                     this.state.fiveGenreMoviesPlaying.map((movie, i) => {
                         return (
-                            <div key={this.state.genreMoviesPlaying[i].id}>
+                            <Link to={`/movie/${this.state.fiveGenreMoviesPlaying[i].id}`}>
+                            <div key={this.state.fiveGenreMoviesPlaying[i].id}>
+                                
                                 <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`}
                                     alt={`Poster for ${this.state.genreMoviesPlaying[i].title}`} />
                                 <h1>{this.state.genreMoviesPlaying[i].title}</h1>
                             </div>
+                            </Link>
                         )
                     })
                     : null}
