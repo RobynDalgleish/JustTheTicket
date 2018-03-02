@@ -11,7 +11,7 @@ class SearchResults extends React.Component {
             genreMoviesPlaying: [],
             fiveGenreMoviesPlaying: [],
         }
-        // this.getOnePage = this.getOnePage.bind(this);
+        this.getOnePage = this.getOnePage.bind(this);
     }
 
     //This makes an axios call to get one page of data from the now playing section of MovieDB API
