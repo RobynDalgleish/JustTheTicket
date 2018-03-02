@@ -1,5 +1,4 @@
 import React from 'react';
-import TopFive from './topFive';
 import config from './config'
 import axios from 'axios';
 
@@ -9,11 +8,11 @@ class GenreDropDown extends React.Component{
     constructor() {
         super();
         this.state = {
-            overview: '',
-            title: '',
-            poster_path: '',
-            tagline: ''
+            genres: [],
+            // userSelectedGenre: '',
         };
+        this.dropdownChange = this.dropdownChange.bind(this);
+        this.getMoviesByGenre = this.getMoviesByGenre.bind(this);
     }
 
     componentDidMount() {
@@ -23,18 +22,52 @@ class GenreDropDown extends React.Component{
             }
         })
             .then(({ data }) => {
-                console.log(data.genres[0]);
+                
+                let genreList = data.genres;
+                genreList.unshift({ 
+                    id: 'i', 
+                    name: 'Choose a Genre'
+                });
+
                 this.setState({
-                    genre: data.name,
+                    genres: genreList,
                 })
-            });
+            }); 
     }
+
+    getMoviesByGenre() {
+
+    }
+
+    //This captures the genre id from the genre dropdown
+    //and sets it on the App state so we can pass it to a sibling component
+    dropdownChange(e) {
+        // this.setState({
+        //     userSelectedGenre: 
+        // })
+        //Figure out how to redirect to a new url with react router
+        ///searchResults/{}}
+        //this.props.history.push -- history,push is a function in the dataset of router
+        //the function pushes to the end of the array, which is the URL 
+        this.props.history.push(`/searchResults/${e.target.value}`)
+    } 
+
 
     render() {
         return(
-            <div>
-                <h1>GenreDropDown drpdownnnnn</h1>
-                {/* link to Search Results */}
+            <div className="genreWrapper">
+                <select onChange={this.dropdownChange}>
+                {
+                    this.state.genres.map((gnr, i) => {
+                        
+                            return (
+                                <option key={i} value={this.state.genres[i].id}>{this.state.genres[i].name}</option>
+                            )
+                    })
+                
+                }
+                </select>
+                {/* <button onClick={this.getMoviesByGenre}>🔎</button> */}
             </div>
         )
     }

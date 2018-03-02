@@ -1,0 +1,73 @@
+@import "setup";
+@import "variables";
+@import "mixins";
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 62.5%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+}
+
+.splash {
+    background: $brand-red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 50px;
+    h1 {
+        color: #fff;
+        text-align: right;
+        font-size: 4.25rem;
+        padding: 100px 0 50px;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    h4 {
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+}
+
+// .searchWrapper {}
+select {
+    padding: 20px 25px;
+    border: 0;
+    width: 100%;
+    border-radius: 30px;
+    margin-top: 30px;
+    font-family: 'Lato', sans-serif;
+    color: $body-color;
+    font-size: 1rem;
+    position: relative;
+}
+
+// .genreWrapper {
+//     position: relative;
+//     &:after {
+//         // display: none;
+//         content: "\f002";
+//         font-family: "Font Awesome 5 Free";
+//         background-color: blue;
+//         height: 100px;
+//         width: 100px;
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//     }
+// }
+select {
+    @include appearance(none);
+}
