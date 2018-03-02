@@ -2,69 +2,59 @@ import React from 'react';
 import Nav from './nav';
 import axios from 'axios';
 import config from './config.js';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 class SearchResults extends React.Component {
     constructor() {
         super();
         this.state = {
-            moviesPlaying: [],
             genreMoviesPlaying: [],
-            page: 1,
+            fiveGenreMoviesPlaying: [],
         }
         // this.getOnePage = this.getOnePage.bind(this);
     }
 
-    // getOnePage(i) {
-    //     axios.get(`${config.movieApiURL}/movie/now_playing`, {
-    //         params: {
-    //             api_key: config.movieApiKey,
-    //             page: i
-    //         }
-    //     })
-    //         .then(({ data }) => {
-    //             console.log(data);
-    //             const moviesPlaying = data.results;
-    //             const genreCodeNum = parseInt(this.props.match.params.genre_id);
-    //             const newNewArray = moviesPlaying.filter(movie => movie.genre_ids.includes(genreCodeNum));
-    //             newArray.push(newNewArray)
-    //         })
-    // }
-
-    componentDidMount() {
-        //Gets the NOW PLAYING movies sorted most popular first
+    //This makes an axios call to get one page of data from the now playing section of MovieDB API
+    //It takes on argument which is the page of results it should pull
+    getOnePage(i) {
         axios.get(`${config.movieApiURL}/movie/now_playing`, {
             params: {
                 api_key: config.movieApiKey,
+                page: i
             }
         })
+            //Next, the function filters the results to create an array that only contains objects from the
+            //API where the genre matches the genre selected by the user
             .then(({ data }) => {
                 const moviesPlaying = data.results;
-                //The genre code is a string, and we need an interger
-                //parseInt converts string to interget and we store that
-                //in genreCodeNum
                 const genreCodeNum = parseInt(this.props.match.params.genre_id);
-                //This creates a new array from the movies in theatres, selecting only the movies that have the genre code we've selected
-                const newArray = moviesPlaying.filter(movie => movie.genre_ids.includes(genreCodeNum));
+                const newNewArray = moviesPlaying.filter(movie => movie.genre_ids.includes(genreCodeNum));
+                //These filtered results are added to the array in the state and saved on the variable newGenreMoviesPlaying
+                let newGenreMoviesPlaying = this.state.genreMoviesPlaying.concat(newNewArray);
+                //This new array is added to the state
+                this.setState ({
+                    genreMoviesPlaying: newGenreMoviesPlaying,
+                },() =>{
+                    //Next, in a callback function, we test to see if the length of the genreMoviesPlaying in the state is less than 5. If it is, we iterate i and pass it up to call the next page.
+                    if(this.state.genreMoviesPlaying.length < 5){
+                        this.getOnePage(i+1);
+                    //This is reccursion, Jonathan taught me about it, and it's BEAUTIFUL
+                    }
 
-                // So we check the legnth of the newArray 
-                // for loop to check right after
-                // if it's true it'll make the second call......
-
-                // for (let i = 2; newArray.length < 5; i++) {
-                // this.getOnePage(i);
-                // console.log('We need More');
-                // }
-                //Now we take the new filtered array and set it to the state as genreMoviesPlaying
-                this.setState({
-                    genreMoviesPlaying: newArray,
                 })
-                
-
-            });
+                //Finally we take the resulting array and create a new one that takes only the first five. This is what we display to the page!
+                const fiveGenreMoviesPlaying = this.state.genreMoviesPlaying.slice(0,5);
+                this.setState({
+                    fiveGenreMoviesPlaying: fiveGenreMoviesPlaying
+                })
+            })
     }
-    ///HOWEVER sometimes the # of movies returned could be less than 5
-    //We need to create a way to check for that & loop though another page
-    //of API results
+
+    //It's so lovely. All we have to do is call this function here and it will fun itself until the basis is met.
+    componentDidMount() {
+        this.getOnePage(1);
+    }
+
     render() {
         return (
             <div>
@@ -72,14 +62,17 @@ class SearchResults extends React.Component {
                 {/* Ternary operator only posts the movie info to the page
                 after the data has been brought in from axios 
                 We need to figure out how to link this to /movie/:movie_id*/}
-                {this.state.genreMoviesPlaying.length !== 0 ?
-                    this.state.genreMoviesPlaying.map((movie, i) => {
+                {this.state.fiveGenreMoviesPlaying.length !== 0 ?
+                    this.state.fiveGenreMoviesPlaying.map((movie, i) => {
                         return (
-                                <div key={this.state.genreMoviesPlaying[i].id}>
-                                    <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`}
-                                        alt={`Poster for ${this.state.genreMoviesPlaying[i].title}`} />
-                                    <h1>{this.state.genreMoviesPlaying[i].title}</h1>
-                                </div>
+                            <Link to={`/movie/${this.state.fiveGenreMoviesPlaying[i].id}`}>
+                            <div key={this.state.fiveGenreMoviesPlaying[i].id}>
+                                
+                                <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`}
+                                    alt={`Poster for ${this.state.genreMoviesPlaying[i].title}`} />
+                                <h1>{this.state.genreMoviesPlaying[i].title}</h1>
+                            </div>
+                            </Link>
                         )
                     })
                     : null}

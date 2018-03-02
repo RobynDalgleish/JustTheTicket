@@ -15,7 +15,7 @@ firebase.initializeApp(config);
 class SingleMovie extends React.Component{
 
 pushToFirebase() {
-    const chosenSingleMovie = 284054;
+
     const dbRef = firebase.database().ref();
     dbRef.push(chosenSingleMovie);
 }
