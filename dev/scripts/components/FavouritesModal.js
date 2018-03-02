@@ -6,7 +6,7 @@ class FavouritesModal extends React.Component{
     render(){
         return(
             <div>
-                <h1>Favourite Modal</h1>
+                <p>Favourite Modal</p>
             </div>
         )
     }
