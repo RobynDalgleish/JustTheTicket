@@ -6,7 +6,8 @@ class SingleMovie extends React.Component{
         return(
             <div>
                 <Nav />
-                <h1>Single Movie Page</h1>
+                <p>{`config.movieApiURL`}</p>
+                <button><i class="far fa-heart"></i></button>
             </div>
         )
     }
