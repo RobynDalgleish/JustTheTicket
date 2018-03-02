@@ -17,7 +17,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      movies: []
+      movies: [],
+      userSelectedGenre: '',
     };
   }
 
@@ -28,36 +29,22 @@ class App extends React.Component {
       }
     })
       .then(({ data }) => {
-      console.log(data);
       this.setState({
         movies: data.results
       })
     });
 
-    //MovieDB Call
-    axios.get(`${config.movieApiURL}/movie/now_playing`, {
-      params: {
-        api_key: config.movieApiKey
-      }
-    })
-      .then(({ data }) => {
-        console.log(data);
-        this.setState({
-          movies: data.results
-        })
-      });
   }
 
-  
 
   render() {
     return (
      <Router>
         <div>
-          <Route path ="/" exact component={Splash} />
-          {/* Search Results gets imported into the app */}
-          <Route path="/searchResults" exact component={SearchResults}/>
-          <Route path="/movie" exact component={SingleMovie}/>
+          <Route path="/" exact component={Splash} />
+          {/* :genre_id creates a variable. Now from the componant "SearchResults" you can access a piece of data passed through the URL. (So /searchResults/:apple would make {this.props.params.genre_id} === 'apple'*/}
+          <Route path="/searchResults/:genre_id" exact component={SearchResults}/>
+          <Route path="/movie/:movie_id" exact component={SingleMovie}/>
         </div>
      </Router>
     )
