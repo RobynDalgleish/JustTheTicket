@@ -4,7 +4,19 @@ import axios from 'axios';
 import config from './config.js';
 import TheatreLocations from './theatreLocations.js';
 
+// Initialize Firebase
+const config = {
+apiKey: "AIzaSyAy4PXK2rmuB3mf9nW-OH2j5zIun36oxkQ",
+authDomain: "justtheticket-3b06f.firebaseapp.com",
+databaseURL: "https://justtheticket-3b06f.firebaseio.com",
+projectId: "justtheticket-3b06f",
+storageBucket: "",
+messagingSenderId: "690914500190"
+};
+firebase.initializeApp(config);
+
 class SingleMovie extends React.Component{
+
     constructor() {
         super();
         this.state = {
