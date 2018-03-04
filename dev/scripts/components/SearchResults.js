@@ -52,6 +52,7 @@ class SearchResults extends React.Component {
 
     //It's so lovely. All we have to do is call this function here and it will fun itself until the basis is met.
     componentDidMount() {
+
         this.getOnePage(1);
     }
 
