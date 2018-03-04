@@ -30,9 +30,9 @@ class SingleMovie extends React.Component{
     componentDidMount() {
         //Connect to MovieDB
         // console.log(this)
-        axios.get(`${config.movieApiURL}/movie/${this.props.match.params.movie_id}`, {
+        axios.get(`${config.movieDBApiURL}/movie/${this.props.match.params.movie_id}`, {
             params: {
-                api_key: config.movieApiKey,
+                api_key: config.movieDBApiKey,
             }
         })
             .then(({ data }) => {
@@ -43,9 +43,9 @@ class SingleMovie extends React.Component{
                 })
 
                 //Connect to New York Times
-                axios.get(`${config.apiURL}`, {
+                axios.get(`${config.nytApiURL}`, {
                     params: {
-                        api_key: config.api_key,
+                        api_key: config.nytApiKey,
                         query: this.state.movieTitle
                     }
                 })
