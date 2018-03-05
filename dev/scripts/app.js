@@ -23,9 +23,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`${config.apiURL}`,{
+    axios.get(`${config.nytApiURL}`,{
       params: {
-        api_key: config.api_key
+        api_key: config.nytApiKey
       }
     })
       .then(({ data }) => {

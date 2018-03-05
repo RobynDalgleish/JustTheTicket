@@ -14,15 +14,6 @@ const fbconfig = {
     messagingSenderId: "1013885392178"
 };
 firebase.initializeApp(fbconfig);
-// const configuration = {
-// apiKey: "AIzaSyAy4PXK2rmuB3mf9nW-OH2j5zIun36oxkQ",
-// authDomain: "justtheticket-3b06f.firebaseapp.com",
-// databaseURL: "https://justtheticket-3b06f.firebaseio.com",
-// projectId: "justtheticket-3b06f",
-// storageBucket: "",
-// messagingSenderId: "690914500190"
-// };
-// firebase.initializeApp(configuration);
 
 class SingleMovie extends React.Component{
 
@@ -46,9 +37,9 @@ class SingleMovie extends React.Component{
         });
 
         //Connect to MovieDB for videos
-        axios.get(`${config.movieApiURL}/movie/${this.props.match.params.movie_id}/videos`, {
+        axios.get(`${config.movieDBApiURL}/movie/${this.props.match.params.movie_id}/videos`, {
             params: {
-                api_key: config.movieApiKey,
+                api_key: config.movieDBApiKey,
             }
         })
             .then(({ data }) => {
@@ -60,9 +51,9 @@ class SingleMovie extends React.Component{
                 })
 
         //Connect to MovieDB
-        axios.get(`${config.movieApiURL}/movie/${this.props.match.params.movie_id}`, {
+        axios.get(`${config.movieDBApiURL}/movie/${this.props.match.params.movie_id}`, {
             params: {
-                api_key: config.movieApiKey,
+                api_key: config.movieDBApiKey,
             }
         })
             .then(({ data }) => {
@@ -75,9 +66,9 @@ class SingleMovie extends React.Component{
                 })
                 
                 //Connect to New York Times
-                axios.get(`${config.apiURL}`, {
+                axios.get(`${config.nytApiURL}`, {
                     params: {
-                        api_key: config.api_key,
+                        api_key: config.nytApiKey,
                         query: this.state.movieTitle
                     }
                 })
@@ -88,7 +79,6 @@ class SingleMovie extends React.Component{
                         })
 
                     });
-
             });
 
 
@@ -118,26 +108,26 @@ class SingleMovie extends React.Component{
                 
                 <div className="singleMovie" >
                 
-                <div className="imgContainer">
-                <img src={`https://image.tmdb.org/t/p/w500/${this.state.movieObject.poster_path}`}
-                    alt={`Poster`} />
-                </div>
+                    <div className="imgContainer">
+                        <img src={`https://image.tmdb.org/t/p/w500/${this.state.movieObject.poster_path}`}
+                        alt={`Poster`} />
+                    </div>
 
-                <ul className="pageLinks">
-                    <li><a href="#summary">Summary</a> | </li>
-                    <li><a href="#review">Review</a> | </li>
-                    <li><a href="#trailer">Trailer</a> | </li>
-                    <li><a href="#showtimes">Showtimes</a> </li>
-                </ul>
-                
+                    <ul className="pageLinks">
+                        <li><a href="#summary">Summary</a> | </li>
+                        <li><a href="#review">Review</a> | </li>
+                        <li><a href="#trailer">Trailer</a> | </li>
+                        <li><a href="#showtimes">Showtimes</a> </li>
+                    </ul>
+                    
                     <div className="movieDetails" id="summary">
-                    <h2>{this.state.movieObject.title}</h2>
+                        <h2>{this.state.movieObject.title}</h2>
 
 
-                <p>
-                {this.state.reviewObject.mpaa_rating} | 
-                {this.state.movieObject.runtime} minutes
-                </p>
+                        <p>
+                            {this.state.reviewObject.mpaa_rating} | 
+                            {this.state.movieObject.runtime} minutes
+                        </p>
 
                 <button className="addMovie" onClick={this.addMovie} value={this.state.movieTitle}><i className="far fa-heart"></i></button>
 
@@ -148,28 +138,27 @@ class SingleMovie extends React.Component{
 
 
                     <div className="review" id="review">
-                
-                {this.state.reviewObject.critics_pick === 0 ?
-                null
-                : <span>Critic's Pick</span>}
-
-                    <h2>{this.state.reviewObject.headline}</h2>
-                <p>
-                        {this.state.reviewObject.byline}, <em>New York Times</em>
-                </p>
-                    <p>{this.state.reviewObject.summary_short}
-                </p>
-                    <a href={this.state.reviewLink} target="_blank">Read Review</a>
-                </div>
+                        {this.state.reviewObject.critics_pick === 0 
+                        ? null
+                        : <span>Critic's Pick</span>}
+                        <h2>{this.state.reviewObject.headline}</h2>
+                        {/* The name of a publication is meant to be italicized - style guide, hence <em> */}
+                        <p>{this.state.reviewObject.byline}, <em>New York Times</em></p>
+                        <p>{this.state.reviewObject.summary_short}</p>
+                        <a href={this.state.reviewLink} target="_blank">Read Review</a>
+                    </div>
 
                     <div className="Trailer" id="trailer">
                         <iframe src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                    </div>
+                
+                    {
+                        // Making sure the TheaterLocations component has the movie information before calling a function on componentDidMount in that component. Once we update this state with a movie title (waiting for the api data to cpme back), React will check the render method again
+                        this.state.movieTitle
+                            ? <TheatreLocations movieTitle={this.state.movieTitle} />
+                            : null
+                    }
                 </div>
-            
-            
-                    <TheatreLocations id="showtimes" movieTitle={this.state.movieTitle} />
-                    
-            </div>
             </div>
         )
     }
