@@ -73,10 +73,21 @@ class SingleMovie extends React.Component{
             <div>
                 <Nav />
                 
-                <div className="movieDetails">
-                <img src={`https://image.tmdb.org/t/p/w200/${this.state.movieObject.poster_path}`}
-                    alt={`Poster`} />
+                <div className="singleMovie" >
                 
+                <div className="imgContainer">
+                <img src={`https://image.tmdb.org/t/p/w500/${this.state.movieObject.poster_path}`}
+                    alt={`Poster`} />
+                </div>
+
+                <ul className="pageLinks">
+                    <li><a href="#summary">Summary</a> | </li>
+                    <li><a href="#review">Review</a> | </li>
+                    <li><a href="#trailer">Trailer</a> | </li>
+                    <li><a href="#showtimes">Showtimes</a> </li>
+                </ul>
+                
+                    <div className="movieDetails" id="summary">
                     <h2>{this.state.movieObject.title}</h2>
 
 
@@ -91,7 +102,7 @@ class SingleMovie extends React.Component{
                 </div>
 
 
-                <div className="review">
+                    <div className="review" id="review">
                 
                 {this.state.reviewObject.critics_pick === 0 ?
                 null
@@ -106,13 +117,14 @@ class SingleMovie extends React.Component{
                     <a href={this.state.reviewLink} target="_blank">Read Review</a>
                 </div>
 
-                <div className="Trailer">
-                    <iframe width="560" height="315" src={this.state.youtubeKey} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <div className="Trailer" id="trailer">
+                    <iframe src={this.state.youtubeKey} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
             
             
-                <TheatreLocations movieTitle={this.state.movieTitle} />
-
+                    <TheatreLocations id="showtimes" movieTitle={this.state.movieTitle} />
+                    
+            </div>
             </div>
         )
     }

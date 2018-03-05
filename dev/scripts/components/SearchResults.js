@@ -59,12 +59,16 @@ class SearchResults extends React.Component {
         return (
             <div>
                 <Nav />
+                <div className="searchWrapper">
+                <div className="main-carousel" data-flickity='{ "cellAlign": "left", "contain": true }'>
                 {/* Ternary operator only posts the movie info to the page
                 after the data has been brought in from axios 
                 We need to figure out how to link this to /movie/:movie_id*/}
                 {this.state.fiveGenreMoviesPlaying.length !== 0 ?
                     this.state.fiveGenreMoviesPlaying.map((movie, i) => {
                         return (
+                            
+                                <div className="carousel-cell">
                             <Link to={`/movie/${this.state.fiveGenreMoviesPlaying[i].id}`}>
                             <div key={this.state.fiveGenreMoviesPlaying[i].id}>
                                 
@@ -73,9 +77,12 @@ class SearchResults extends React.Component {
                                 <h1>{this.state.genreMoviesPlaying[i].title}</h1>
                             </div>
                             </Link>
+                            </div>
                         )
                     })
                     : null}
+                    </div>
+                    </div>
             </div>
         )
     }
