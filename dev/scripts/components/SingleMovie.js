@@ -3,17 +3,7 @@ import Nav from './nav';
 import axios from 'axios';
 import config from './config.js';
 import TheatreLocations from './theatreLocations.js';
-
-// Initialize Firebase
-const fbconfig = {
-    apiKey: "AIzaSyA6WGA6Y1VlX557CyvHXY9TM2zExStdxL8",
-    authDomain: "justtheticket-dba5e.firebaseapp.com",
-    databaseURL: "https://justtheticket-dba5e.firebaseio.com",
-    projectId: "justtheticket-dba5e",
-    storageBucket: "",
-    messagingSenderId: "1013885392178"
-};
-firebase.initializeApp(fbconfig);
+import FavouritesModal from './FavouritesModal.js';
 
 class SingleMovie extends React.Component{
 
@@ -99,13 +89,12 @@ class SingleMovie extends React.Component{
 
         movieDB.push(movieInfo);
     }
-    
 
     render(){
         return(
             <div>
                 <Nav />
-                
+                <FavouritesModal />
                 <div className="singleMovie" >
                 
                     <div className="imgContainer">
