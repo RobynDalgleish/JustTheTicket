@@ -17,9 +17,9 @@ class SearchResults extends React.Component {
     //This makes an axios call to get one page of data from the now playing section of MovieDB API
     //It takes on argument which is the page of results it should pull
     getOnePage(i) {
-        axios.get(`${config.movieApiURL}/movie/now_playing`, {
+        axios.get(`${config.movieDBApiURL}/movie/now_playing`, {
             params: {
-                api_key: config.movieApiKey,
+                api_key: config.movieDBApiKey,
                 page: i
             }
         })
