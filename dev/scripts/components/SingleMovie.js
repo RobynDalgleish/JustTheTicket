@@ -4,17 +4,6 @@ import axios from 'axios';
 import config from './config.js';
 import TheatreLocations from './theatreLocations.js';
 
-// Initialize Firebase
-const config = {
-apiKey: "AIzaSyAy4PXK2rmuB3mf9nW-OH2j5zIun36oxkQ",
-authDomain: "justtheticket-3b06f.firebaseapp.com",
-databaseURL: "https://justtheticket-3b06f.firebaseio.com",
-projectId: "justtheticket-3b06f",
-storageBucket: "",
-messagingSenderId: "690914500190"
-};
-firebase.initializeApp(config);
-
 class SingleMovie extends React.Component{
 
     constructor() {
@@ -26,6 +15,7 @@ class SingleMovie extends React.Component{
             youtubeKey: '',
             reviewObject: {},
             reviewLink: '',
+            movieID: '',
         }
     }
 
@@ -130,7 +120,7 @@ class SingleMovie extends React.Component{
                 </div>
 
                     <div className="Trailer" id="trailer">
-                    <iframe src={this.state.youtubeKey} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <iframe src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                 </div>
             
             
