@@ -6,12 +6,14 @@ import Splash from './components/splash';
 import Nav from './components/nav';
 import SearchResults from './components/SearchResults';
 import SingleMovie from './components/SingleMovie';
+import FavouritesModal from './components/FavouritesModal.js';
 import {
   BrowserRouter as Router,
   Route,
   Link
 
 } from 'react-router-dom';
+
 
 class App extends React.Component {
   constructor() {
@@ -20,6 +22,7 @@ class App extends React.Component {
       movies: [],
       userSelectedGenre: '',
     };
+    // this.addMovie = this.addMovie.bind(this);
   }
 
   componentDidMount() {
@@ -36,17 +39,18 @@ class App extends React.Component {
 
   }
 
-
   render() {
     return (
-      <Router onUpdate={() => window.scrollTo(0, 0)} >
-        <div>
-          <Route path="/" exact component={Splash} />
-          {/* :genre_id creates a variable. Now from the componant "SearchResults" you can access a piece of data passed through the URL. (So /searchResults/:apple would make {this.props.params.genre_id} === 'apple'*/}
-          <Route path="/searchResults/:genre_id" exact component={SearchResults}/>
-          <Route path="/movie/:movie_id" exact component={SingleMovie}/>
-        </div>
-     </Router>
+      <div>
+        <Router onUpdate={() => window.scrollTo(0, 0)} >
+          <div>
+            <Route path="/" exact component={Splash} />
+            {/* :genre_id creates a variable. Now from the componant "SearchResults" you can access a piece of data passed through the URL. (So /searchResults/:apple would make {this.props.params.genre_id} === 'apple'*/}
+            <Route path="/searchResults/:genre_id" exact component={SearchResults}/>
+            <Route path="/movie/:movie_id" exact component={SingleMovie}/>
+          </div>
+       </Router>
+      </div>
     )
   }
 
