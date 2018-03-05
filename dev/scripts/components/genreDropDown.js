@@ -57,7 +57,7 @@ class GenreDropDown extends React.Component {
 
                     }
                 </select>
-                {/* <button onClick={this.getMoviesByGenre}>🔎</button> */}
+                <div className="search"></div>
             </div>
         )
     }

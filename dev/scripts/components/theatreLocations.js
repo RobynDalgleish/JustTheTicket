@@ -27,7 +27,7 @@ class TheatreLocations extends React.Component {
     this.getMovieId();
   }
   // get the film id for the movieGlu api from the movie title prop
-  getMovieId() {
+  getMovieId(props) {
     // .replace = regex. -> '/ /' are separating elements, \ not sure, 'g' is global(replace every instance and not just the first), the '+' is what we are replacing empty space with
     const movieTitle = this.props.movieTitle.replace(/ /g, '+').toLowerCase();
 
@@ -149,13 +149,13 @@ class TheatreLocations extends React.Component {
           // if there is anything in state that says there are no movies available, then show no movies available message
           this.state.movieId
             ? <form onSubmit={this.submit}>
-              <input type="text" id="userText" value={this.state.userText} onChange={this.handleLocationChange} placeholder="Enter city, address, or postal code" />
-              <label htmlFor="userText"><span className="visuallyhidden">Enter city, address, or postal code</span>where?</label>
-              {/* how do I pass this date value AND the movie id to the final function? */}
-              <input type="date" id="searchDate" value={this.state.searchDate} onChange={this.handleDateChange} min="" />
-              <label htmlFor="searchDate">when?</label>
-              <input type="submit" value="Search for showtimes" />
-            </form>
+                <input type="text" id="userText" value={this.state.userText} onChange={this.handleLocationChange} placeholder="Enter city, address, or postal code" />
+                <label htmlFor="userText"><span className="visuallyhidden">Enter city, address, or postal code</span>where?</label>
+                {/* how do I pass this date value AND the movie id to the final function? */}
+                <input type="date" id="searchDate" value={this.state.searchDate} onChange={this.handleDateChange} min="" />
+                <label htmlFor="searchDate">when?</label>
+                <input type="submit" value="Search for showtimes" />
+              </form>
             : <p>Sorry, we could not find any showtimes for that movie.</p>
           // else, show the form
         }
