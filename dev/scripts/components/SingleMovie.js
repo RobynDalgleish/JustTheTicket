@@ -114,8 +114,7 @@ class SingleMovie extends React.Component{
                 <p>
                         {this.state.reviewObject.byline}, <em>New York Times</em>
                 </p>
-                    <p>{this.state.reviewObject.summary_short}
-                </p>
+                    <p>{this.state.reviewObject.summary_short}</p>
                     <a href={this.state.reviewLink} target="_blank">Read Review</a>
                 </div>
 
