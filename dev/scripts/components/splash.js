@@ -14,11 +14,16 @@ class Splash extends React.Component {
         return(
             <div className="splash">
                 <HandleUser />
+
+                <div className="splashWrapper">
+                <div className="brandName">
+                <img src="./images/yellowticket.svg" alt="logo" />
                 <h1>Just<br/>the<br/>Ticket</h1>
+                </div>
                 <h4>What do you want to see?</h4>
                 <GenreDropDown dropdownChange={this.props.dropdownChange} history={this.props.history} />
 
-
+                </div>
             </div>
         )
     }
