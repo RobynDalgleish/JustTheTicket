@@ -4,6 +4,26 @@ import axios from 'axios';
 import config from './config.js';
 import TheatreLocations from './theatreLocations.js';
 
+// Initialize Firebase
+const fbconfig = {
+    apiKey: "AIzaSyA6WGA6Y1VlX557CyvHXY9TM2zExStdxL8",
+    authDomain: "justtheticket-dba5e.firebaseapp.com",
+    databaseURL: "https://justtheticket-dba5e.firebaseio.com",
+    projectId: "justtheticket-dba5e",
+    storageBucket: "",
+    messagingSenderId: "1013885392178"
+};
+firebase.initializeApp(fbconfig);
+// const configuration = {
+// apiKey: "AIzaSyAy4PXK2rmuB3mf9nW-OH2j5zIun36oxkQ",
+// authDomain: "justtheticket-3b06f.firebaseapp.com",
+// databaseURL: "https://justtheticket-3b06f.firebaseio.com",
+// projectId: "justtheticket-3b06f",
+// storageBucket: "",
+// messagingSenderId: "690914500190"
+// };
+// firebase.initializeApp(configuration);
+
 class SingleMovie extends React.Component{
 
     constructor() {
@@ -17,9 +37,14 @@ class SingleMovie extends React.Component{
             reviewLink: '',
             movieID: '',
         }
+        this.addMovie = this.addMovie.bind(this);
     }
 
     componentDidMount() {
+        firebase.database().ref().on('value', (res) => {
+            // console.log(res);
+        });
+
         //Connect to MovieDB for videos
         axios.get(`${config.movieApiURL}/movie/${this.props.match.params.movie_id}/videos`, {
             params: {
@@ -68,6 +93,22 @@ class SingleMovie extends React.Component{
 
 
     }
+
+    // Create a function for onClick of the button it will add to firebase and to favourites
+    addMovie(props) {
+        console.log(props);
+
+        const movieInfo = {
+            movieID: this.state.movieObject.id,
+            movieName: this.state.movieObject.title
+        }
+
+        console.log(movieInfo);
+
+        const movieDB = firebase.database().ref();
+
+        movieDB.push(movieInfo);
+    }
     
 
     render(){
@@ -97,6 +138,8 @@ class SingleMovie extends React.Component{
                 {this.state.reviewObject.mpaa_rating} | 
                 {this.state.movieObject.runtime} minutes
                 </p>
+
+                <button className="addMovie" onClick={this.addMovie} value={this.state.movieTitle}><i className="far fa-heart"></i></button>
 
                 <h3>{this.state.movieObject.tagline}</h3>
                 <p>{this.state.movieObject.overview}</p>
@@ -130,5 +173,4 @@ class SingleMovie extends React.Component{
         )
     }
 }
-
 export default SingleMovie;
