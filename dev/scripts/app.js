@@ -39,7 +39,7 @@ class App extends React.Component {
 
   render() {
     return (
-     <Router>
+      <Router onUpdate={() => window.scrollTo(0, 0)} >
         <div>
           <Route path="/" exact component={Splash} />
           {/* :genre_id creates a variable. Now from the componant "SearchResults" you can access a piece of data passed through the URL. (So /searchResults/:apple would make {this.props.params.genre_id} === 'apple'*/}

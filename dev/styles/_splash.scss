@@ -1,0 +1,78 @@
+.splash {
+    background: $brand-red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 50px;
+    h1 {
+        color: #fff;
+        text-align: right;
+        font-size: 70px;
+        line-height: 78px;
+        padding: 100px 0 50px;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        z-index: 100;
+        position: relative;
+    }
+    h4 {
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+    .brandName {
+        position: relative;
+    }
+    .brandName img {
+        position: absolute;
+        z-index: 0;
+        width: 250px;
+    }
+}
+
+.splashWrapper {
+    width: calc(100% - 100px);
+    max-width: 390px;
+    position: absolute;
+    bottom: 75px;
+}
+
+select {
+    padding: 15px 50px 20px 25px;
+    border: 0;
+    width: 100%;
+    border-radius: 30px;
+    margin-top: 30px;
+    font-family: 'Lato', sans-serif;
+    color: $body-color;
+    font-size: 1rem;
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.genreWrapper {
+    position: relative;
+    margin: 0 auto;
+}
+
+.search {
+    color: $body-color;
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+    height: 40px;
+    font-size: 1rem;
+    &::before {
+        display: none;
+        font-family: "Font Awesome 5 Solid";
+        content: "\f002";
+    }
+}
+
+select {
+    @include appearance(none);
+}
