@@ -68,16 +68,16 @@ class SearchResults extends React.Component {
                     this.state.fiveGenreMoviesPlaying.map((movie, i) => {
                         return (
                             
-                                <div className="carousel-cell">
+                            <div className="carousel-cell" key={this.state.fiveGenreMoviesPlaying[i].id}>
                             <Link to={`/movie/${this.state.fiveGenreMoviesPlaying[i].id}`}>
-                            <div key={this.state.fiveGenreMoviesPlaying[i].id}>
+                            <div>
                                 
                                 <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`}
                                     alt={`Poster for ${this.state.genreMoviesPlaying[i].title}`} />
                                 <h1>{this.state.genreMoviesPlaying[i].title}</h1>
                             </div>
                             </Link>
-                            </div>
+                        </div>
                         )
                     })
                     : null}
