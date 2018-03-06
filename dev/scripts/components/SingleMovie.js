@@ -3,7 +3,6 @@ import Nav from './nav';
 import axios from 'axios';
 import config from './config.js';
 import TheatreLocations from './theatreLocations.js';
-import FavouritesModal from './FavouritesModal.js';
 
 class SingleMovie extends React.Component{
 
@@ -85,7 +84,7 @@ class SingleMovie extends React.Component{
 
         console.log(movieInfo);
 
-        const movieDB = firebase.database().ref();
+        const movieDB = firebase.database().ref(`users/${this.state.user.uid}`);
 
         movieDB.push(movieInfo);
     }
@@ -94,7 +93,6 @@ class SingleMovie extends React.Component{
         return(
             <div>
                 <Nav />
-                <FavouritesModal />
                 <div className="singleMovie" >
                 
                     <div className="imgContainer">

@@ -3,12 +3,7 @@ import HandleUser from './handleUser';
 import GenreDropDown from './genreDropDown';
 import SearchResults from './SearchResults';
 
-class Splash extends React.Component {
-
-    componentDidMount() {
-        
-    }
-    
+class Splash extends React.Component {    
     render () {
         // console.log('this props', this.props)
         return(
