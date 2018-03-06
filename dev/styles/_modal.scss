@@ -1,6 +1,11 @@
+// .overlay,
+// .modal{
+//     visibility: hidden;
+// }
 .overlay {
     display: none;
     position: fixed;
+    visibility: hidden;
     top: 0;
     left: 0;
     right: 0;
@@ -9,7 +14,7 @@
 }
 
 .modal {
-    display: none;
+    visibility: hidden;
     position: fixed;
     top: 50px;
     left: 50px;
@@ -20,4 +25,9 @@
     padding: 50px;
     font-size: 30px;
     line-height: 40px;
+}
+
+.modal.show,
+.overlay.show {
+    visibility: visible;
 }
