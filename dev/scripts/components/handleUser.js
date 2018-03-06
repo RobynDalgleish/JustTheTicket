@@ -28,8 +28,6 @@ class HandleUser extends React.Component {
         
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                console.log(user);
-
                 const movieDB = firebase.database().ref(`users/${user.uid}`);
                 console.log(movieDB);
                 movieDB.on('value', (snapshot) => {
@@ -44,6 +42,7 @@ class HandleUser extends React.Component {
                     this.setState({
                         favourites: movieArray,
                     })
+                    // console.log(this.state.favourites);
                 });
                 this.setState({
                     loggedIn: true,
@@ -79,7 +78,6 @@ class HandleUser extends React.Component {
         this.modal.classList.toggle('show');
     }
     removeFav(favID){
-        // console.log(this);
         console.log(favID);
         const dbRef = firebase.database().ref(`users/${this.state.user.uid}/${favID}`);
         dbRef.remove();
@@ -97,24 +95,23 @@ class HandleUser extends React.Component {
                     <button className="create Account" onClick={this.signIn}>Login/Create Account</button>
                 }
                     <div className="overlay" ref={ref => this.overlay = ref}>
-                    <div className="modal" ref={ref => this.modal = ref}>
-                        <div className="closeButton" onClick={this.toggleFavourites}>
-                            <i className="fa fa-times"></i>
-                        </div>
+                        <div className="modal" ref={ref => this.modal = ref}>
+                            <div className="closeButton" onClick={this.toggleFavourites}>
+                                <i className="fa fa-times"></i>
+                            </div>
 
-                        <ul>
-                            
-                            {
-                                this.state.favourites.map((item) => {
-                                    console.log(item.key);
-                                    return (
-                                        <li key={item.key}><button className="remove" onClick={() => this.removeFav(item.key)}>x</button><Link to={`/movie/${item.movieID}`}>{item.movieName}</Link></li>
-                                    )
-                                })
-                            }
-                        </ul>
+                            <ul>
+                                
+                                {
+                                    this.state.favourites.map((item) => {
+                                        return (
+                                            <li key={item.key}><button className="remove" onClick={() => this.removeFav(item.key)}>x</button><Link to={`/movie/${item.movieID}`}>{item.movieName}</Link></li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
                     </div>
-                </div>
                 {/* <FavouritesModal toggleFavourites={this.toggleFavourites}/> */}
             </div>
         ) 
