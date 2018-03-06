@@ -35,7 +35,6 @@ class HandleUser extends React.Component {
                 movieDB.on('value', (snapshot) => {
                     const movieArray = [];
                     const selectedMovie = snapshot.val();
-
                     for (let itemKey in selectedMovie) {
                         selectedMovie[itemKey].key = itemKey;
                         movieArray.push(selectedMovie[itemKey]);
@@ -60,25 +59,22 @@ class HandleUser extends React.Component {
         })
     }
     signIn(){
-        console.log('signed in');
         const provider = new firebase.auth.GoogleAuthProvider();
         provider.setCustomParameters({
             prompt:'select_account'
         });
         firebase.auth().signInWithPopup(provider)
             .then((user) => {
-                console.log(user);
+                // console.log(`Should we be capturing`, user);
             })
     }
     signOut(){
-        console.log('signed out');
         firebase.auth().signOut();
         this.setState({
             loggedIn: false,
         })
     }
     toggleFavourites(){
-        console.log('toggled favourites');
         this.overlay.classList.toggle('show');
         this.modal.classList.toggle('show');
     }
@@ -100,12 +96,14 @@ class HandleUser extends React.Component {
                     :
                     <button className="create Account" onClick={this.signIn}>Login/Create Account</button>
                 }
-                    <div className="overlay" ref={ref => this.overlay = ref}></div>
+                    <div className="overlay" ref={ref => this.overlay = ref}>
                     <div className="modal" ref={ref => this.modal = ref}>
+                        <div className="closeButton" onClick={this.toggleFavourites}>
+                            <i className="fa fa-times"></i>
+                        </div>
+
                         <ul>
-                            <div className="closeButton" onClick={this.toggleFavourites}>
-                                <i className="fa fa-times"></i>
-                            </div>
+                            
                             {
                                 this.state.favourites.map((item) => {
                                     console.log(item.key);
@@ -116,6 +114,7 @@ class HandleUser extends React.Component {
                             }
                         </ul>
                     </div>
+                </div>
                 {/* <FavouritesModal toggleFavourites={this.toggleFavourites}/> */}
             </div>
         ) 
