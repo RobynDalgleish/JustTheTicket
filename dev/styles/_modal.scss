@@ -1,0 +1,32 @@
+// .overlay,
+// .modal{
+//     visibility: hidden;
+// }
+// .overlay {
+//     display: none;
+//     position: fixed;
+//     visibility: hidden;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background-color: rgba(0, 0, 0, 0.5);
+// }
+.modal {
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    color: $body-color;
+    padding: 50px;
+    font-size: 30px;
+    line-height: 40px;
+}
+
+.modal.show,
+.overlay.show {
+    visibility: visible;
+}

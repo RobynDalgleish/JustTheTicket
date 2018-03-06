@@ -60,7 +60,7 @@ class SearchResults extends React.Component {
             <div>
                 <Nav />
                 <div className="searchWrapper">
-                <div className="main-carousel" data-flickity='{ "cellAlign": "left", "contain": true }'>
+                    <div className="main-carousel" >
                 {/* Ternary operator only posts the movie info to the page
                 after the data has been brought in from axios 
                 We need to figure out how to link this to /movie/:movie_id*/}
@@ -68,16 +68,14 @@ class SearchResults extends React.Component {
                     this.state.fiveGenreMoviesPlaying.map((movie, i) => {
                         return (
                             
-                                <div className="carousel-cell">
-                            <Link to={`/movie/${this.state.fiveGenreMoviesPlaying[i].id}`}>
-                            <div key={this.state.fiveGenreMoviesPlaying[i].id}>
+                            // <Link to={`/movie/${this.state.fiveGenreMoviesPlaying[i].id}`} key={this.state.fiveGenreMoviesPlaying[i].id}>
+                            // <div>
                                 
-                                <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`}
-                                    alt={`Poster for ${this.state.genreMoviesPlaying[i].title}`} />
-                                <h1>{this.state.genreMoviesPlaying[i].title}</h1>
-                            </div>
-                            </Link>
-                            </div>
+                                <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`} alt={`Poster for ${this.state.genreMoviesPlaying[i].title}`} 
+                                key={this.state.fiveGenreMoviesPlaying[i].id} className="cell"/>
+                                // {/* <h1>{this.state.genreMoviesPlaying[i].title}</h1> */}
+                            // </div>
+                            // </Link>
                         )
                     })
                     : null}

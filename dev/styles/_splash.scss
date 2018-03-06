@@ -1,11 +1,21 @@
 .splash {
     background: $brand-red;
     position: absolute;
+    min-height: 100%;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     padding: 50px;
+    .handleUser {
+        position: absolute;
+        right: 20px;
+        top: 50px;
+        border: 1px solid red;
+    }
+    @media screen and (max-width: 350px) {
+        padding: 0px;
+    }
     h1 {
         color: #fff;
         text-align: right;
@@ -36,8 +46,28 @@
 .splashWrapper {
     width: calc(100% - 100px);
     max-width: 390px;
-    position: absolute;
-    bottom: 75px;
+    min-width: 250px;
+    margin: 0 auto;
+    margin-top: calc(100vh - 605px);
+    @media screen and (max-width: 350px) {
+        position: static;
+        margin: 50px auto;
+    }
+    @media screen and (min-width: 1450px) {
+        margin-right: 150px;
+    }
+}
+
+.halfPage {
+    @media screen and (min-width: 1000px) {
+        width: 40%;
+    }
+    @media screen and (min-width: 1350px) {
+        width: 50%;
+    }
+    @media screen and (min-width: 1450px) {
+        width: calc(100% - 673px);
+    }
 }
 
 select {
@@ -75,4 +105,17 @@ select {
 
 select {
     @include appearance(none);
+}
+
+.posterWrapper {
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top: 0;
+    img {
+        max-height: 100%;
+    }
+    @media screen and (max-width: 1000px) {
+        display: none;
+    }
 }

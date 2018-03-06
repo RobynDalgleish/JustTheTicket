@@ -17,6 +17,9 @@
         left: 25px;
         transform: translateY(-50%);
         color: #fff;
+        &::before {
+            content: url('')
+        }
     }
 }
 

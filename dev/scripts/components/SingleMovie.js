@@ -4,22 +4,13 @@ import axios from 'axios';
 import config from './config.js';
 import TheatreLocations from './theatreLocations.js';
 
-// Initialize Firebase
-const fbconfig = {
-    apiKey: "AIzaSyA6WGA6Y1VlX557CyvHXY9TM2zExStdxL8",
-    authDomain: "justtheticket-dba5e.firebaseapp.com",
-    databaseURL: "https://justtheticket-dba5e.firebaseio.com",
-    projectId: "justtheticket-dba5e",
-    storageBucket: "",
-    messagingSenderId: "1013885392178"
-};
-firebase.initializeApp(fbconfig);
-
 class SingleMovie extends React.Component{
 
     constructor() {
         super();
         this.state = {
+            loggedIn: false,
+            user:{},
             movieObject: {},
             movieTitle: '',
             movieGenres: [],
@@ -29,12 +20,19 @@ class SingleMovie extends React.Component{
             movieID: '',
         }
         this.addMovie = this.addMovie.bind(this);
+        window.scrollTo(0, 0);
     }
 
     componentDidMount() {
-        firebase.database().ref().on('value', (res) => {
-            // console.log(res);
-        });
+        firebase.auth().onAuthStateChanged((user) => {
+            console.log(user);
+            this.setState ({
+                user: user
+            })
+        })
+        // firebase.database().ref().on('value', (res) => {
+        //     // console.log(res);
+        // });
 
         //Connect to MovieDB for videos
         axios.get(`${config.movieDBApiURL}/movie/${this.props.match.params.movie_id}/videos`, {
@@ -73,6 +71,7 @@ class SingleMovie extends React.Component{
                     }
                 })
                     .then(({ data }) => {
+                        console.log(this);
                         this.setState({
                             reviewObject: data.results[0],
                             reviewLink: data.results[0].link.url
@@ -85,27 +84,27 @@ class SingleMovie extends React.Component{
     }
 
     // Create a function for onClick of the button it will add to firebase and to favourites
-    addMovie(props) {
-        console.log(props);
-
-        const movieInfo = {
-            movieID: this.state.movieObject.id,
-            movieName: this.state.movieObject.title
-        }
-
-        console.log(movieInfo);
-
-        const movieDB = firebase.database().ref();
-
-        movieDB.push(movieInfo);
+    addMovie() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user) {
+                const movieInfo = {
+                    movieID: this.state.movieObject.id,
+                    movieName: this.state.movieObject.title
+                }
+        
+                console.log(movieInfo);
+        
+                const movieDB = firebase.database().ref(`users/${this.state.user.uid}`);
+        
+                movieDB.push(movieInfo);
+            }
+        })
     }
-    
 
     render(){
         return(
             <div>
                 <Nav />
-                
                 <div className="singleMovie" >
                 
                     <div className="imgContainer">
@@ -149,7 +148,7 @@ class SingleMovie extends React.Component{
                     </div>
 
                     <div className="Trailer" id="trailer">
-                        <iframe src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                        <iframe iframe width="560" height="315" src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                     </div>
                 
                     {
