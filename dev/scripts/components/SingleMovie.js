@@ -137,7 +137,7 @@ class SingleMovie extends React.Component{
                     </div>
 
                     <div className="Trailer" id="trailer">
-                        <iframe src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                        <iframe iframe width="560" height="315" src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                     </div>
                 
                     {

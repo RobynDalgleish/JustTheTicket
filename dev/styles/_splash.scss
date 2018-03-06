@@ -7,6 +7,12 @@
     right: 0;
     bottom: 0;
     padding: 50px;
+    .handleUser {
+        position: absolute;
+        right: 20px;
+        top: 50px;
+        border: 1px solid red;
+    }
     @media screen and (max-width: 350px) {
         padding: 0px;
     }
@@ -41,11 +47,50 @@
     width: calc(100% - 100px);
     max-width: 390px;
     min-width: 250px;
-    position: absolute;
-    bottom: 75px;
+    margin: 0 auto;
+    margin-top: calc(100vh - 605px);
     @media screen and (max-width: 350px) {
         position: static;
         margin: 50px auto;
+    }
+    @media screen and (min-width: 515px) {
+        margin-top: calc(100vh - 740px);
+        h1 {
+            font-size: 100px;
+            line-height: 1.2em;
+        }
+        h4 {
+            font-size: 1rem;
+            line-height: 1.2em;
+            text-align: right;
+        }
+    }
+    @media screen and (min-width: 860px) {
+        margin-top: calc(100vh - 858px);
+        h1 {
+            font-size: 125px;
+            line-height: 1.2em;
+        }
+        h4 {
+            font-size: 1.5rem;
+            line-height: 1.2em;
+            text-align: right;
+        }
+    }
+    @media screen and (min-width: 1450px) {
+        margin-right: 150px;
+    }
+}
+
+.halfPage {
+    @media screen and (min-width: 1175px) {
+        width: 40%;
+    }
+    @media screen and (min-width: 1350px) {
+        width: 50%;
+    }
+    @media screen and (min-width: 1450px) {
+        width: calc(100% - 673px);
     }
 }
 
@@ -94,14 +139,7 @@ select {
     img {
         max-height: 100%;
     }
-    @media screen and (max-width: 950px) {
-        max-width: calc(100vw - 550px);
-        max-height: calc(100vh - 75px);
-        position: absolute;
-        bottom: 75px;
-        border: 1px solid red;
-        img {
-            padding-top: 100px;
-        }
+    @media screen and (max-width: 1175px) {
+        display: none;
     }
 }
