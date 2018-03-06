@@ -3,7 +3,6 @@ import axios from 'axios';
 import config from './config.js';
 import Qs from 'qs';
 
-
 class TheatreLocations extends React.Component {
 
   constructor(props) {
