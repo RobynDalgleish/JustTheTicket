@@ -25,7 +25,7 @@ class SingleMovie extends React.Component{
 
     componentDidMount() {
         firebase.auth().onAuthStateChanged((user) => {
-            console.log(user);
+            // console.log(user);
             this.setState ({
                 user: user
             })
@@ -71,7 +71,7 @@ class SingleMovie extends React.Component{
                     }
                 })
                     .then(({ data }) => {
-                        console.log(data);
+                        // console.log(data);
                         this.setState({
                             reviewObject: data.results[0],
                             reviewLink: data.results[0].link.url
@@ -96,8 +96,25 @@ class SingleMovie extends React.Component{
                 // console.log(movieInfo);
         
                 const movieDB = firebase.database().ref(`users/${this.state.user.uid}`);
-        
-                movieDB.push(movieInfo);
+                
+                movieDB.on('value', (snapshot) => {
+                    const movieArray = [];
+                    const selectedMovie = snapshot.val();
+                    for (let itemKey in selectedMovie) {
+                        selectedMovie[itemKey].key = itemKey;
+                        movieArray.push(selectedMovie[itemKey]);
+                    }
+
+                    const testNewArray = movieArray.filter(movie => movie.movieName.includes(movieInfo.movieName));
+                    
+                    if (testNewArray.length <= 0 ) {
+                        movieDB.push(movieInfo);
+                        console.log(movieInfo);
+                    } 
+
+
+                });
+
             }
         })
     }
