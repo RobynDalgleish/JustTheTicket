@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import config from './config.js';
 import Qs from 'qs';
+import _ from 'underscore';
 
 class TheatreLocations extends React.Component {
 
@@ -13,6 +14,7 @@ class TheatreLocations extends React.Component {
       userText: '',
       searchDate: '',
       movieId: '',
+      combinedData: [],
     };
     this.getMovieId = this.getMovieId.bind(this);
     this.getLatLng = this.getLatLng.bind(this);
@@ -27,10 +29,8 @@ class TheatreLocations extends React.Component {
     this.getMovieId();
   }
   // get the film id for the movieGlu api from the movie title prop
-  getMovieId(props) {
-    // .replace = regex. -> '/ /' are separating elements, \ not sure, 'g' is global(replace every instance and not just the first), the '+' is what we are replacing empty space with
-    const movieTitle = this.props.movieTitle.replace(/ /g, '+').toLowerCase();
-
+  getMovieId() {
+    const movieTitle = this.props.movieTitle;
     axios({
       method: 'GET',
       url: 'http://proxy.hackeryou.com',
@@ -39,22 +39,21 @@ class TheatreLocations extends React.Component {
         return Qs.stringify(params, { arrayFormat: 'brackets' })
       },
       params: {
-        reqUrl: `${config.movieGluApiURL}filmLiveSearch/`,
+        reqUrl: `${config.internationalshowtimesApiURL}movies/`,
         params: {
-          "query": movieTitle
+          "search_query": movieTitle,
+          "search_field": "title",
+          "countries": "CA"
         },
         proxyHeaders: {
           "header_params": "value",
-          "x-api-key": config.movieGluApiKey,
-          "client": "NONE_4",
-          "Authorization": "Basic Tk9ORV80OnVZWFY5ME1WckpacA==",
-          "api-version": "v102",
-          "Credential": "uYXV90MVrJZp"
+          "x-api-key": config.internationalshowtimesApiKey
         },
         xmlToJSON: false
       }
     }).then((res) => {
-      if (res.data.films.length === 0) {
+      console.log(res.data);
+      if (res.data.movies.length === 0) {
         this.setState({
           // null leads to 'Sorry, we could not find any showtimes for that movie.' in render
           // using 'movieId: null' is better than creating a new state (a noMoviesAvailable state, for example) because it keeps the narrative linear instead of creating 2 arbitrary conditions - keeps the two states connected, as they are.
@@ -62,7 +61,7 @@ class TheatreLocations extends React.Component {
         })
       } else {
         this.setState({
-          movieId: res.data.films[0].film_id
+          movieId: res.data.movies[0].id
         })
       }
       console.log(this.state.movieId);
@@ -106,8 +105,10 @@ class TheatreLocations extends React.Component {
       .then(({ data }) => {
         this.setState({
           lat: data.results[0].geometry.location.lat,
-          lng: data.results[0].geometry.location.lat,
+          lng: data.results[0].geometry.location.lng,
         })
+        console.log(this.state.lat);
+        console.log(this.state.lng);
         this.getTheatreLocations()
       });
   }
@@ -121,24 +122,33 @@ class TheatreLocations extends React.Component {
         return Qs.stringify(params, { arrayFormat: 'brackets' })
       },
       params: {
-        reqUrl: `${config.movieGluApiURL}filmShowTimes/?`,
+        reqUrl: `${config.internationalshowtimesApiURL}showtimes/`,
         params: {
-          "film_id": movieId,
-          "date": searchDate,
+          "movie_id": this.state.movieId,
+          "time_from": `${this.state.searchDate}T00:00:01`,
+          "time_to": `${this.state.searchDate}T11:59`,
+          "location": `${this.state.lat},${this.state.lng}`,
+          "append": "cinemas",
+          "cinema_fields": "name,id,location.address.display_text",
         },
         proxyHeaders: {
           "header_params": "value",
-          "x-api-key": config.movieGluApiKey,
-          "client": "NONE_4",
-          "Authorization": "Basic Tk9ORV80OnVZWFY5ME1WckpacA==",
-          "api-version": "v102",
-          "Credential": "uYXV90MVrJZp",
-          "Geolocation": `${lat};${lng}`
+          "x-api-key": config.internationalshowtimesApiKey,
         },
         xmlToJSON: false
       }
     }).then((res) => {
-      console.log(res);
+      let groupedData = res.data.cinemas.map(cinemasItem => {
+        let matchedShowtimes = res.data.showtimes.filter(showtimesItem => {
+          return showtimesItem.cinema_id === cinemasItem.id
+        })
+        matchedShowtimes.map(matchedShowtime => {
+          return Object.assign(matchedShowtime, cinemasItem);
+        });
+      })
+      console.log(groupedData);
+      this.setState({
+      })
     });
   }
 
