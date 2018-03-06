@@ -53,37 +53,13 @@
         position: static;
         margin: 50px auto;
     }
-    @media screen and (min-width: 515px) {
-        margin-top: calc(100vh - 740px);
-        h1 {
-            font-size: 100px;
-            line-height: 1.2em;
-        }
-        h4 {
-            font-size: 1rem;
-            line-height: 1.2em;
-            text-align: right;
-        }
-    }
-    @media screen and (min-width: 860px) {
-        margin-top: calc(100vh - 858px);
-        h1 {
-            font-size: 125px;
-            line-height: 1.2em;
-        }
-        h4 {
-            font-size: 1.5rem;
-            line-height: 1.2em;
-            text-align: right;
-        }
-    }
     @media screen and (min-width: 1450px) {
         margin-right: 150px;
     }
 }
 
 .halfPage {
-    @media screen and (min-width: 1175px) {
+    @media screen and (min-width: 1000px) {
         width: 40%;
     }
     @media screen and (min-width: 1350px) {
@@ -139,7 +115,7 @@ select {
     img {
         max-height: 100%;
     }
-    @media screen and (max-width: 1175px) {
+    @media screen and (max-width: 1000px) {
         display: none;
     }
 }

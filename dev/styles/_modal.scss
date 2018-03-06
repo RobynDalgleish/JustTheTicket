@@ -2,24 +2,23 @@
 // .modal{
 //     visibility: hidden;
 // }
-.overlay {
-    display: none;
-    position: fixed;
+// .overlay {
+//     display: none;
+//     position: fixed;
+//     visibility: hidden;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background-color: rgba(0, 0, 0, 0.5);
+// }
+.modal {
     visibility: hidden;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal {
-    visibility: hidden;
-    position: fixed;
-    top: 50px;
-    left: 50px;
-    right: 50px;
-    bottom: 50px;
     background: white;
     color: $body-color;
     padding: 50px;
