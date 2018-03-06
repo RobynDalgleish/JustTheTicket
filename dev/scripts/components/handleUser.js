@@ -23,6 +23,7 @@ class HandleUser extends React.Component {
         this.signIn = this.signIn.bind(this);
         this.signOut = this.signOut.bind(this);
         this.toggleFavourites = this.toggleFavourites.bind(this);
+        this.removeFav = this.removeFav.bind(this);
     }
     componentDidMount() {
         firebase.auth().onAuthStateChanged((user) => {
@@ -44,6 +45,7 @@ class HandleUser extends React.Component {
                 });
                 this.setState({
                     loggedIn: true,
+                    user: user
                 });
             }
             else {
@@ -77,7 +79,11 @@ class HandleUser extends React.Component {
         this.overlay.classList.toggle('show');
         this.modal.classList.toggle('show');
     }
-    
+    removeFav(favID){
+        console.log(favID);
+        const dbRef = firebase.database().ref(favID);
+        dbRef.remove();
+    }
     render() {
         return(
             <div className="handleUser">
@@ -100,7 +106,7 @@ class HandleUser extends React.Component {
                                 this.state.favourites.map((item) => {
                                     // console.log(item);
                                     return (
-                                        <li key={item.key}><Link to={`/movie/${item.movieID}`}>{item.movieName}</Link></li>
+                                        <li key={item.key}><button className="remove" onClick={() => this.removeFav(item.key)}>x</button><Link to={`/movie/${item.movieID}`}>{item.movieName}</Link></li>
                                     )
                                 })
                             }
