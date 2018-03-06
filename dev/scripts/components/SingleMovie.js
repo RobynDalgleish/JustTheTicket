@@ -18,6 +18,7 @@ class SingleMovie extends React.Component{
             movieID: '',
         }
         this.addMovie = this.addMovie.bind(this);
+        window.scrollTo(0, 0);
     }
 
     componentDidMount() {
