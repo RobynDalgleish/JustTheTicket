@@ -71,10 +71,11 @@ class SingleMovie extends React.Component{
                     }
                 })
                     .then(({ data }) => {
-                        console.log(this);
+                        console.log(data);
                         this.setState({
                             reviewObject: data.results[0],
                             reviewLink: data.results[0].link.url
+                            // Error when results = 0
                         })
 
                     });
@@ -92,7 +93,7 @@ class SingleMovie extends React.Component{
                     movieName: this.state.movieObject.title
                 }
         
-                console.log(movieInfo);
+                // console.log(movieInfo);
         
                 const movieDB = firebase.database().ref(`users/${this.state.user.uid}`);
         
@@ -135,11 +136,15 @@ class SingleMovie extends React.Component{
                 <p><a href={this.state.movieObject.homepage} target="_blank">Visit the official website</a></p>
                 </div>
 
-
+                 {/* {this.state.reviewObject.length === undefined ? 
+                    null 
+                    :
+                    
+                 } */}
                     <div className="review" id="review">
-                        {this.state.reviewObject.critics_pick === 0 
-                        ? null
-                        : <span>Critic's Pick</span>}
+                        {this.state.reviewObject.critics_pick === 0
+                            ? null
+                            : <span>Critic's Pick</span>}
                         <h2>{this.state.reviewObject.headline}</h2>
                         {/* The name of a publication is meant to be italicized - style guide, hence <em> */}
                         <p>{this.state.reviewObject.byline}, <em>New York Times</em></p>

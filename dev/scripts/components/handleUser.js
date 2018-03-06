@@ -17,7 +17,6 @@ class HandleUser extends React.Component {
         this.state = {
             favourites: [],
             loggedIn: false,
-            toggleFav: false,
             user: {}
         }
         this.signIn = this.signIn.bind(this);
@@ -26,9 +25,13 @@ class HandleUser extends React.Component {
         this.removeFav = this.removeFav.bind(this);
     }
     componentDidMount() {
+        
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                const movieDB = firebase.database().ref();
+                console.log(user);
+
+                const movieDB = firebase.database().ref(`users/${user.uid}`);
+                console.log(movieDB);
                 movieDB.on('value', (snapshot) => {
                     const movieArray = [];
                     const selectedMovie = snapshot.val();
@@ -36,11 +39,11 @@ class HandleUser extends React.Component {
                         selectedMovie[itemKey].key = itemKey;
                         movieArray.push(selectedMovie[itemKey]);
                     }
+                    // console.log(itemKey);
 
                     this.setState({
                         favourites: movieArray,
                     })
-                
                 });
                 this.setState({
                     loggedIn: true,
@@ -76,7 +79,9 @@ class HandleUser extends React.Component {
         this.modal.classList.toggle('show');
     }
     removeFav(favID){
-        const dbRef = firebase.database().ref(favID);
+        // console.log(this);
+        console.log(favID);
+        const dbRef = firebase.database().ref(`users/${this.state.user.uid}/${favID}`);
         dbRef.remove();
     }
     render() {
@@ -101,7 +106,7 @@ class HandleUser extends React.Component {
                             
                             {
                                 this.state.favourites.map((item) => {
-                                    // console.log(this.state.user)
+                                    console.log(item.key);
                                     return (
                                         <li key={item.key}><button className="remove" onClick={() => this.removeFav(item.key)}>x</button><Link to={`/movie/${item.movieID}`}>{item.movieName}</Link></li>
                                     )
