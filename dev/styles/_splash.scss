@@ -8,10 +8,10 @@
     bottom: 0;
     padding: 50px;
     .handleUser {
+        width: 100%;
         position: absolute;
         right: 20px;
         top: 50px;
-        border: 1px solid red;
     }
     @media screen and (max-width: 350px) {
         padding: 0px;
