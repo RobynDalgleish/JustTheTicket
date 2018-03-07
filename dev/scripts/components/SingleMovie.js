@@ -26,14 +26,10 @@ class SingleMovie extends React.Component{
 
     componentDidMount() {
         firebase.auth().onAuthStateChanged((user) => {
-            // console.log(user);
             this.setState ({
                 user: user
             })
         })
-        // firebase.database().ref().on('value', (res) => {
-        //     // console.log(res);
-        // });
 
         //Connect to MovieDB for videos
         axios.get(`${config.movieDBApiURL}/movie/${this.props.match.params.movie_id}/videos`, {
@@ -56,7 +52,6 @@ class SingleMovie extends React.Component{
             }
         })
             .then(({ data }) => {
-                // console.log(data)
                 this.setState({
                     movieObject: data,
                     movieTitle: data.title,
@@ -72,7 +67,6 @@ class SingleMovie extends React.Component{
                     }
                 })
                     .then(({ data }) => {
-                        // console.log(data);
                         this.setState({
                             reviewObject: data.results[0],
                             reviewLink: data.results[0].link.url
@@ -94,8 +88,6 @@ class SingleMovie extends React.Component{
                     movieName: this.state.movieObject.title
                 }
         
-                // console.log(movieInfo);
-        
                 const movieDB = firebase.database().ref(`users/${this.state.user.uid}`);
                 
                 movieDB.on('value', (snapshot) => {
@@ -107,11 +99,14 @@ class SingleMovie extends React.Component{
                     }
 
                     const testNewArray = movieArray.filter(movie => movie.movieName.includes(movieInfo.movieName));
-                    
+
+
                     if (testNewArray.length <= 0 ) {
                         movieDB.push(movieInfo);
-                        console.log(movieInfo);
-                    } 
+                        this.setState = {
+                            red: true
+                        }
+                    }
 
 
                 });
@@ -123,7 +118,9 @@ class SingleMovie extends React.Component{
     render(){
         return(
             <div>
+                <div className="liftingNav">
                 <Nav />
+                </div>
                 <div className="singleMovie" >
                 
                     <div className="imgContainer">
@@ -140,27 +137,36 @@ class SingleMovie extends React.Component{
                     
                 <div className="description">
                     <div className="movieDetails" id="summary">
+
+
+                        <button className="addMovie" onClick={this.addMovie} value={this.state.movieTitle}>
+                            <i className="far fa-heart"></i>
+                        </button>
+
                         <h2>{this.state.movieObject.title}</h2>
 
 
                         <p>
-                            {this.state.reviewObject.mpaa_rating} | 
+
+                            {this.state.reviewObject.mpaa_rating != null
+                             ? <span>{this.state.reviewObject.mpaa_rating} | </span>
+                             : null
+                             }
+
                             {this.state.movieObject.runtime} minutes
                         </p>
 
-                <button className="addMovie" onClick={this.addMovie} value={this.state.movieTitle}><i className="far fa-heart"></i></button>
-
-                <h3>{this.state.movieObject.tagline}</h3>
-                <p>{this.state.movieObject.overview}</p>
-                <p><a href={this.state.movieObject.homepage} target="_blank">Visit the official website</a></p>
+                        <h3>{this.state.movieObject.tagline}</h3>
+                        <p>{this.state.movieObject.overview}</p>
+                        <p><a href={this.state.movieObject.homepage} target="_blank">Visit the official website</a></p>
                 </div>
 
-                 {/* {this.state.reviewObject.length === undefined ? 
-                    null 
-                    :
+                    {this.state.reviewObject.display_title === undefined 
                     
-                 } */}
-                    <div className="review" id="review">
+                    ? null 
+                    : (
+                    
+                        <div className="review" id="review">
                         {this.state.reviewObject.critics_pick === 0
                             ? null
                             : <span>Critic's Pick</span>}
@@ -169,7 +175,9 @@ class SingleMovie extends React.Component{
                         <p>{this.state.reviewObject.byline}, <em>New York Times</em></p>
                         <p>{this.state.reviewObject.summary_short}</p>
                         <a href={this.state.reviewLink} target="_blank">Read Review</a>
-                    </div>
+                        </div>
+                    )}
+
 
                     <div className="Trailer" id="trailer">
                         <iframe width="560" height="315" src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>

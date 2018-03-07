@@ -40,12 +40,11 @@ class Splash extends React.Component {
         return(
             <div className="splash">
 
-                <div className="handleUser">
-                <HandleUser />
-                </div>
-
-                <div className="halfPage">
+            <div className="halfPage">
                     <div className="splashWrapper">
+                        <div className="handleUser">
+                            <HandleUser />
+                        </div>
                         <div className="brandName">
                             <img src="./images/yellowticket.svg" alt="logo" />
                             <h1>Just<br/>the<br/>Ticket</h1>
