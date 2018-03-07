@@ -253,8 +253,9 @@ class TheatreLocations extends React.Component {
               })}
             </div>
           : <div>
-            {this.state.searchHasBeenDone ? <p>Sorry, we could not find any showtimes for that movie.</p> : null}
-          </div>   
+              {this.state.searchHasBeenDone ? 
+                <p>Sorry, we could not find any showtimes for that movie.</p> : null}
+            </div>   
         }
       </div>
     )
