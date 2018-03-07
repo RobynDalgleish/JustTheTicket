@@ -25,7 +25,7 @@ class SingleMovie extends React.Component{
 
     componentDidMount() {
         firebase.auth().onAuthStateChanged((user) => {
-            console.log(user);
+            // console.log(user);
             this.setState ({
                 user: user
             })
@@ -71,7 +71,7 @@ class SingleMovie extends React.Component{
                     }
                 })
                     .then(({ data }) => {
-                        console.log(data);
+                        // console.log(data);
                         this.setState({
                             reviewObject: data.results[0],
                             reviewLink: data.results[0].link.url
@@ -96,8 +96,25 @@ class SingleMovie extends React.Component{
                 // console.log(movieInfo);
         
                 const movieDB = firebase.database().ref(`users/${this.state.user.uid}`);
-        
-                movieDB.push(movieInfo);
+                
+                movieDB.on('value', (snapshot) => {
+                    const movieArray = [];
+                    const selectedMovie = snapshot.val();
+                    for (let itemKey in selectedMovie) {
+                        selectedMovie[itemKey].key = itemKey;
+                        movieArray.push(selectedMovie[itemKey]);
+                    }
+
+                    const testNewArray = movieArray.filter(movie => movie.movieName.includes(movieInfo.movieName));
+                    
+                    if (testNewArray.length <= 0 ) {
+                        movieDB.push(movieInfo);
+                        console.log(movieInfo);
+                    } 
+
+
+                });
+
             }
         })
     }
@@ -120,6 +137,7 @@ class SingleMovie extends React.Component{
                         <li><a href="#showtimes">Showtimes</a> </li>
                     </ul>
                     
+                <div className="description">
                     <div className="movieDetails" id="summary">
                         <h2>{this.state.movieObject.title}</h2>
 
@@ -153,8 +171,10 @@ class SingleMovie extends React.Component{
                     </div>
 
                     <div className="Trailer" id="trailer">
-                        <iframe iframe width="560" height="315" src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                        <iframe width="560" height="315" src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                     </div>
+
+                    
                 
                     {
                         // Making sure the TheaterLocations component has the movie information before calling a function on componentDidMount in that component. Once we update this state with a movie title (waiting for the api data to cpme back), React will check the render method again
@@ -162,6 +182,7 @@ class SingleMovie extends React.Component{
                             ? <TheatreLocations movieTitle={this.state.movieTitle} />
                             : null
                     }
+                </div>
                 </div>
             </div>
         )
