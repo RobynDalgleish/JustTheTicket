@@ -6,6 +6,7 @@ import Splash from './components/splash';
 import Nav from './components/nav';
 import SearchResults from './components/SearchResults';
 import SingleMovie from './components/SingleMovie';
+// import Footer from './components/footer';
 import {
   BrowserRouter as Router,
   Route,
@@ -49,6 +50,7 @@ class App extends React.Component {
             <Route path="/movie/:movie_id" exact component={SingleMovie}/>
           </div>
        </Router>
+       {/* <Footer /> */}
       </div>
     )
   }

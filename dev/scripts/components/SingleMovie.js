@@ -3,6 +3,7 @@ import Nav from './nav';
 import axios from 'axios';
 import config from './config.js';
 import TheatreLocations from './theatreLocations.js';
+import Footer from './footer';
 
 class SingleMovie extends React.Component{
 
@@ -184,6 +185,7 @@ class SingleMovie extends React.Component{
                     }
                 </div>
                 </div>
+                <Footer />
             </div>
         )
     }

@@ -13,7 +13,7 @@
         margin: 10px 0 20px;
         text-align: center;
         background: $brand-red;
-        padding: 15px 5px;
+        padding: 18px 5px;
         color: #fff;
         text-transform: uppercase;
         font-family: 'Roboto', sans-serif;
@@ -22,7 +22,8 @@
         letter-spacing: 1px;
         font-size: 0.9rem;
         line-height: 1.3em;
-        height: 4rem;
+        height: 3.8rem;
+        
         &:hover {
             background: $body-color;
         }
@@ -36,4 +37,30 @@
     @media screen and (max-width: 500px) {
         width: 100%;
     }
+}
+.imageContainer{
+    min-height: 502.2px;
+    background: black;
+    @media screen and (max-width: 1240px) {
+        min-height:397.5px;
+    }
+    // IPAD
+    @media screen and (max-width: 1024px) {
+        min-height: 316.5px;
+    }
+    @media screen and (max-width: 768px) {
+        min-height: 303px;
+    }
+    // iPhone 7 Plus landscape
+    @media screen and (max-width: 736px) {
+        min-height: 287px;
+    }
+    @media screen and (max-width: 667px){
+        min-height: 395px;
+    }
+    // galaxy s5 landscape
+    @media screen and (max-width: 640px) {
+        min-height: 375px;
+    }
+
 }

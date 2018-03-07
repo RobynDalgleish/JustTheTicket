@@ -7,7 +7,7 @@ class Nav extends React.Component {
         return(
             <div className="nav">
                 <Link to="/">
-                <h1>In Theatres Now</h1>
+                    <h1>In Theatres Now</h1>
                 </Link>
                 <HandleUser />
             </div>

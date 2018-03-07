@@ -245,7 +245,7 @@ class TheatreLocations extends React.Component {
                       return parseInt(a[0].split(":")[0]) > parseInt(b[0].split(":")[0]);
                     // then find all the showtime items and render them below.
                     }).map((showtime) => {
-                      console.log(el);
+                      // console.log(el);
                       return <h5>{showtime[1]}</h5>
                     })}
                   </div>
