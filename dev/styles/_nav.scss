@@ -1,3 +1,6 @@
+.navigation{
+    position: relative;
+}
 .nav {
     background-color: $brand_red;
     height: 78px;
@@ -14,23 +17,40 @@
         font-size: 0.9rem;
         position: absolute;
         top: 50%;
-        left: 25px;
+        left: 50px;
         transform: translateY(-50%);
         color: #fff;
-        &::before {
-            content: url('')
+        z-index:1;
+        &::before{
+            content: url(/images/yellowticket.svg);
+            width: 40px;
+            display: inline-block;
+            position: absolute;
+            z-index: -10;
+            left:-15px;
+            top:-15px;
         }
     }
 }
-
 .imgContainer {
     background: #000;
 }
 
 .handleUser {
-    position: absolute;
-    top: 50%;
-    right: 25px;
-    transform: translateY(-50%);
+    // position: relative;
+    // top: 50%;
+    // right: 25px;
+    float:right;
+    // height:100%;
+    padding-top: 17px;
+    padding-right: 25px;
+    // transform: translateY(-30%);
     text-align: right;
+    @media screen and (max-width: 500px) {
+        .signout,
+        .favourites{
+           font-size: 0.8rem;
+        }
+    }
 }
+

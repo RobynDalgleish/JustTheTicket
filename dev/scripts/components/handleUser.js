@@ -92,25 +92,24 @@ class HandleUser extends React.Component {
                         <button className="favourites" onClick={this.toggleFavourites}>Favourites</button>
                     </div>
                     :
-                    <button className="create Account" onClick={this.signIn}>Login/Create Account</button>
+                    <button className="createAccount" onClick={this.signIn}>Login/Create Account</button>
                 }
-                    <div className="overlay" ref={ref => this.overlay = ref}>
-                        <div className="modal" ref={ref => this.modal = ref}>
-                            <div className="closeButton" onClick={this.toggleFavourites}>
-                                <i className="fa fa-times"></i>
-                            </div>
-
-                            <ul>
-                                
-                                {
-                                    this.state.favourites.map((item) => {
-                                        return (
-                                            <li key={item.key}><button className="remove" onClick={() => this.removeFav(item.key)}>x</button><Link to={`/movie/${item.movieID}`}>{item.movieName}</Link></li>
-                                        )
-                                    })
-                                }
-                            </ul>
+                    <div className="overlay" ref={ref => this.overlay = ref}></div>
+                    <div className="modal" ref={ref => this.modal = ref}>
+                        <div className="closeButton" onClick={this.toggleFavourites}>
+                            <i className="fa fa-times"></i>
                         </div>
+
+                        <ul>
+                            <h2>Favourites</h2>
+                            {
+                                this.state.favourites.map((item) => {
+                                    return (
+                                        <li key={item.key}><button className="remove" onClick={() => this.removeFav(item.key)}>x</button><Link to={`/movie/${item.movieID}`}>{item.movieName}</Link><i className="fas fa-caret-right"></i></li>
+                                    )
+                                })
+                            }
+                        </ul>
                     </div>
                 {/* <FavouritesModal toggleFavourites={this.toggleFavourites}/> */}
             </div>
