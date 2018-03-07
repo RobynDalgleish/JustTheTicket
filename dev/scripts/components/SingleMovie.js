@@ -119,6 +119,7 @@ class SingleMovie extends React.Component {
             <div>
                 <div className="liftingNav">
                     <Nav />
+                </div>
                     <div className="singleMovie clearfix" >
                         <div className="imgContainer">
                             <img src={`https://image.tmdb.org/t/p/w500/${this.state.movieObject.poster_path}`}
@@ -174,7 +175,6 @@ class SingleMovie extends React.Component {
                             }
                         </div>
                     </div>
-                </div>
                 <Footer />
             </div>
         )
