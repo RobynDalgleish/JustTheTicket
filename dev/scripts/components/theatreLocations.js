@@ -227,11 +227,11 @@ class TheatreLocations extends React.Component {
           !(this.state.theatreSearchResults.length === 0) ?
             <div className="showtimeResults">
               {/* Reminder: this.state.theatreSearchResults is the array of values (object.values) of the theatres object we made in the function getTheatreLocations */}
-              {this.state.theatreSearchResults.map((theatre) => {
+              {this.state.theatreSearchResults.map((theatre,i) => {
                 return (
                   <div className="tab">
-                    <input className="showtimeResultsInput" id="link" type="checkbox" name="tabs" />
-                    <label className="showtimeResultsLabel" for="link">
+                    <input className="showtimeResultsInput" id={`link-${i}`} type="checkbox" name="tabs" />
+                    <label className="showtimeResultsLabel" for={`link-${i}`}>
                       <h2>{theatre.name}</h2>
                       <h3>{theatre.address}</h3>
                     </label>
