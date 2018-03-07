@@ -3,6 +3,7 @@ import Nav from './nav';
 import axios from 'axios';
 import config from './config.js';
 import { Link } from 'react-router-dom';
+import Footer from './footer';
 
 class SearchResults extends React.Component {
     constructor() {
@@ -57,7 +58,7 @@ class SearchResults extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="searchMain">
                 <Nav />
                 <div className="searchWrapper">
                     
@@ -71,8 +72,10 @@ class SearchResults extends React.Component {
                             <Link to={`/movie/${this.state.fiveGenreMoviesPlaying[i].id}`} key={this.state.fiveGenreMoviesPlaying[i].id}>
                             <div className="movieResult">
                                 
-                                <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`} alt={`Read more about ${this.state.genreMoviesPlaying[i].title}`} 
-                                key={this.state.fiveGenreMoviesPlaying[i].id} />
+                                <div className="imageContainer">
+                                    <img src={`https://image.tmdb.org/t/p/w500/${this.state.genreMoviesPlaying[i].poster_path}`} alt={`Read more about ${this.state.genreMoviesPlaying[i].title}`} 
+                                    key={this.state.fiveGenreMoviesPlaying[i].id} />
+                                </div>
                                 <h1>{this.state.genreMoviesPlaying[i].title}</h1>
                             </div>
                             </Link>
@@ -81,6 +84,7 @@ class SearchResults extends React.Component {
                     : null}
                     
                     </div>
+                <Footer />
             </div>
         )
     }
