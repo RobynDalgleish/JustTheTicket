@@ -14,7 +14,8 @@ class TheatreLocations extends React.Component {
       searchDate: '',
       movieId: '',
       combinedData: [],
-      theatreSearchResults : []
+      theatreSearchResults : [],
+      searchHasBeenDone : false
     };
     this.getMovieId = this.getMovieId.bind(this);
     this.getLatLng = this.getLatLng.bind(this);
@@ -114,6 +115,9 @@ class TheatreLocations extends React.Component {
   }
 
   getTheatreLocations() {
+    this.setState({
+      searchHasBeenDone : false
+    });
     axios({
       method: 'GET',
       url: 'http://proxy.hackeryou.com',
@@ -138,7 +142,6 @@ class TheatreLocations extends React.Component {
         xmlToJSON: false
       }
     }).then((res) => {
-
       // make an object which will store our theatres (object of objects)
       // we do this because its easy to look up values using keys with objects
       let theatres = {}; 
@@ -162,7 +165,7 @@ class TheatreLocations extends React.Component {
           let originalTime = showtime.start_at;
           // time = the time returned in the getFormatedTime function below
           let timeA = this.getFormattedTime(originalTime,false);
-          let timeB = this.getFormattedTime(originalTtime, true);
+          let timeB = this.getFormattedTime(originalTime, true);
           // push the newly formatted time into the array [cinemaId].showtimes in the theatres object
           // we push an array of two times into the showtimes array
           //one of those times (timeA) is between 0 and 24 and timeB is between 0 and 12
@@ -176,7 +179,8 @@ class TheatreLocations extends React.Component {
 
       this.setState({
         // the state theaterSearchResults is the values of the theatres object we created above
-        theatreSearchResults: Object.values(theatres)
+        theatreSearchResults: Object.values(theatres),
+        searchHasBeenDone : true
       })
     });
   }
@@ -214,8 +218,8 @@ class TheatreLocations extends React.Component {
       <div>
         {
           // if there is something in the this.state.movieId, show: 
-          this.state.movieId
-            ? <form onSubmit={this.submit}>
+          this.state.movieId ?
+             <form onSubmit={this.submit}>
                 <input type="text" id="userText" value={this.state.userText} onChange={this.handleLocationChange} placeholder="Enter city, address, or postal code" />
                 <label htmlFor="userText"><span className="visuallyhidden">Enter city, address, or postal code</span>where?</label>
                 <input type="date" id="searchDate" value={this.state.searchDate} onChange={this.handleDateChange} min="" />
@@ -225,30 +229,34 @@ class TheatreLocations extends React.Component {
               // else display this message:
             : <p>Sorry, we could not find any showtimes for that movie.</p>
         }
-        
-        {/* Reminder: this.state.theatreSearchResults is the array of values (object.values) of the theatres object we made in the function getTheatreLocations */}
-        <div>{this.state.theatreSearchResults.map((theatre) => {
-          return (
+        {!(this.state.theatreSearchResults.length === 0) ?
           <div>
-            <h4>{theatre.name}</h4>
-            <h4>{theatre.address}</h4>
-            {/* map through the object.values of theatres and sort theatre.showtimes (at [0] looks like 2:45 PM, for example). Make each part of the string before the ':' (at [0]) an integer. Then retun the bigger integer first (order the tim from smallest to largest) */}
-            {theatre.showtimes.sort((a,b)=>{
-              // a is one item, b another, the function can only compare 2 at a time, but it compares all the times
-              // this is a helper method too; it retuns the order which is then maintained when maped below
-                // we sort the showtimes by their 0-24:00 time
-                return parseInt(a[0].split(":")[0]) > parseInt(b[0].split(":")[0]);
-                   
-              // then find all the showtime items and render them below.
-            }).map((showtime)=>{
-              // we display their 0-12 AM/PM times
-              // timeA and timeB are two items in one array, so we can sort one side and display the other and they keep their order.
-              return <h5>{showtime[1]}</h5>
-            })}
-          </div>
-          
-          )
-        })}</div>
+              {/* Reminder: this.state.theatreSearchResults is the array of values (object.values) of the theatres object we made in the function getTheatreLocations */}
+              {this.state.theatreSearchResults.map((theatre) => {
+                return (
+                  <div>
+                    <h4>{theatre.name}</h4>
+                    <h4>{theatre.address}</h4>
+                    {/* map through the object.values of theatres and sort theatre.showtimes (at [0] looks like 2:45 PM, for example). Make each part of the string before the ':' (at [0]) an integer. Then retun the bigger integer first (order the tim from smallest to largest) */}
+                    {theatre.showtimes.sort((a, b) => {
+                    // a is one item, b another, the function can only compare 2 at a time, but it compares all the times
+                      // this is a helper method too; it retuns the order which is then maintained when maped below
+                      // we sort the showtimes by their 0-24:00 time
+                      return parseInt(a[0].split(":")[0]) > parseInt(b[0].split(":")[0]);
+                    // then find all the showtime items and render them below.
+                    }).map((showtime) => {
+                      console.log(el);
+                      return <h5>{showtime[1]}</h5>
+                    })}
+                  </div>
+                )
+              })}
+            </div>
+          : <div>
+              {this.state.searchHasBeenDone ? 
+                <p>Sorry, we could not find any showtimes for that movie.</p> : null}
+            </div>   
+        }
       </div>
     )
   }
