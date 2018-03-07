@@ -15,7 +15,7 @@ class TheatreLocations extends React.Component {
       movieId: '',
       combinedData: [],
       theatreSearchResults : [],
-      searchHasBeenDone : false
+      searchHasBeenDone : false,
     };
     this.getMovieId = this.getMovieId.bind(this);
     this.getLatLng = this.getLatLng.bind(this);
@@ -53,7 +53,6 @@ class TheatreLocations extends React.Component {
         xmlToJSON: false
       }
     }).then((res) => {
-      console.log(res.data);
       if (res.data.movies.length === 0) {
         this.setState({
           // null leads to 'Sorry, we could not find any showtimes for that movie.' in render
@@ -65,7 +64,6 @@ class TheatreLocations extends React.Component {
           movieId: res.data.movies[0].id
         })
       }
-      console.log(this.state.movieId);
     });
   }
 
@@ -84,14 +82,12 @@ class TheatreLocations extends React.Component {
     this.setState({
       [e.target.id]: e.target.value
     })
-    console.log(e.target.value)
   }
 
   handleDateChange(e) {
     this.setState({
       [e.target.id]: e.target.value
     })
-    console.log(e.target.value)
   }
 
   getLatLng(inputedLocation) {
@@ -108,8 +104,6 @@ class TheatreLocations extends React.Component {
           lat: data.results[0].geometry.location.lat,
           lng: data.results[0].geometry.location.lng,
         })
-        console.log(this.state.lat);
-        console.log(this.state.lng);
         this.getTheatreLocations()
       });
   }
@@ -158,7 +152,6 @@ class TheatreLocations extends React.Component {
       })
 
       res.data.showtimes.forEach((showtime) => {
-        console.log(showtime);
         let cinemaId = showtime.cinema_id;
         // if our theatres object has a property of showtime.cinema_id, then add that time to the theatre object at that key
         if(theatres[cinemaId]){
@@ -172,15 +165,12 @@ class TheatreLocations extends React.Component {
           theatres[cinemaId].showtimes.push([timeA,timeB]);
         }
       })
-
-      console.log(theatres);
-      // for the theatre object, took each key value pair, and discarded the key and just kept the values as an array of objects
-      console.log(Object.values(theatres));
-
+      
       this.setState({
+        // for the theatre object, took each key value pair, and discarded the key and just kept the values as an array of objects
         // the state theaterSearchResults is the values of the theatres object we created above
         theatreSearchResults: Object.values(theatres),
-        searchHasBeenDone : true
+        searchHasBeenDone : true,
       })
     });
   }
@@ -210,43 +200,53 @@ class TheatreLocations extends React.Component {
     else{
       return `${hour}:${minute}`;
     }
-      
   }
 
   render() {
     return (
-      <div>
+      <div className="theatreLocations">
         {
           // if there is something in the this.state.movieId, show: 
           this.state.movieId ?
-             <form onSubmit={this.submit}>
-                <input type="text" id="userText" value={this.state.userText} onChange={this.handleLocationChange} placeholder="Enter city, address, or postal code" />
+            <form onSubmit={this.submit}>
+              <h2>find showtimes near you</h2>
+              <div className="showtimeInput">
                 <label htmlFor="userText"><span className="visuallyhidden">Enter city, address, or postal code</span>where?</label>
-                <input type="date" id="searchDate" value={this.state.searchDate} onChange={this.handleDateChange} min="" />
+                <input type="text" id="userText" value={this.state.userText} onChange={this.handleLocationChange} placeholder="Enter city, address, or postal code" />
+              </div>
+              <div className="showtimeInput">
                 <label htmlFor="searchDate">when?</label>
-                <input type="submit" value="Search for showtimes" />
-              </form>
+                <input type="date" id="searchDate" value={this.state.searchDate} onChange={this.handleDateChange} min="" />
+              </div>
+              <button type="submit">That's the ticket!</button>
+            </form>
               // else display this message:
             : <p>Sorry, we could not find any showtimes for that movie.</p>
         }
-        {!(this.state.theatreSearchResults.length === 0) ?
-          <div>
+        {
+          !(this.state.theatreSearchResults.length === 0) ?
+            <div className="showtimeResults">
               {/* Reminder: this.state.theatreSearchResults is the array of values (object.values) of the theatres object we made in the function getTheatreLocations */}
               {this.state.theatreSearchResults.map((theatre) => {
                 return (
-                  <div>
-                    <h4>{theatre.name}</h4>
-                    <h4>{theatre.address}</h4>
-                    {/* map through the object.values of theatres and sort theatre.showtimes (at [0] looks like 2:45 PM, for example). Make each part of the string before the ':' (at [0]) an integer. Then retun the bigger integer first (order the tim from smallest to largest) */}
-                    {theatre.showtimes.sort((a, b) => {
-                    // a is one item, b another, the function can only compare 2 at a time, but it compares all the times
-                      // this is a helper method too; it retuns the order which is then maintained when maped below
-                      // we sort the showtimes by their 0-24:00 time
-                      return parseInt(a[0].split(":")[0]) > parseInt(b[0].split(":")[0]);
-                    // then find all the showtime items and render them below.
-                    }).map((showtime) => {
-                      return <h5>{showtime[1]}</h5>
-                    })}
+                  <div className="tab">
+                    <input className="showtimeResultsInput" id="link" type="checkbox" name="tabs" />
+                    <label className="showtimeResultsLabel" for="link">
+                      <h2>{theatre.name}</h2>
+                      <h3>{theatre.address}</h3>
+                    </label>
+                    <div class="tab-content">
+                      {/* map through the object.values of theatres and sort theatre.showtimes (at [0] looks like 2:45 PM, for example). Make each part of the string before the ':' (at [0]) an integer. Then retun the bigger integer first (order the tim from smallest to largest) */}
+                      {theatre.showtimes.sort((a, b) => {
+                      // a is one item, b another, the function can only compare 2 at a time, but it compares all the times
+                        // this is a helper method too; it retuns the order which is then maintained when maped below
+                        // we sort the showtimes by their 0-24:00 time
+                        return parseInt(a[0].split(":")[0]) > parseInt(b[0].split(":")[0]);
+                      // then find all the showtime items and render them below.
+                      }).map((showtime) => {
+                        return <li>{showtime[1]}</li>
+                      })}
+                    </div>
                   </div>
                 )
               })}

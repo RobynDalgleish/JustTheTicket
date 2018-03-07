@@ -1,0 +1,143 @@
+.theatreLocationsWrapper {
+    float: left;
+    width: 50%;
+    text-align: center;
+    padding: 50px 0 50px 50px;
+        @media screen and (max-width: 1000px) {
+            width: 100%;
+            padding: 50px;
+        }
+        h2 {
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 1px; 
+        }
+        button {
+            background-color: $brand-red;
+            padding: 15px 0 20px 0;
+            border: 0;
+            width: 230px;
+            border-radius: 30px;
+            margin: 40px 0 40px 0;
+            font-family: 'Lato', sans-serif;
+            color: #fff;
+            font-size: 1.1rem;
+            position: relative;
+            text-align: center;
+        }
+}
+
+.showtimeInput {
+    text-align: left;
+    padding-top: 15px;
+        label {
+            text-transform: capitalize;
+            font-size: 1rem;
+            letter-spacing: 1px;      
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            color: #6E6E6E;
+            padding-left: 15px;
+        }
+        input {
+            padding: 0 15px 0 15px;
+            display:block;
+            border: none;
+            border-bottom: 2px solid $brand-red;
+            width: 100%;
+            height: 40px;
+            font-weight: 300;
+            font-size: 1rem;
+            color: #6E6E6E;
+            line-height: 1.5em;
+            transition: all .3s;
+            &:hover {
+                transform: scale(1.08)
+            }
+        }
+}
+
+.showtimeResults{
+    text-align: left;
+    h2 {
+        font-size: 1rem;
+        line-height: 1.5rem;
+        margin: 5px 50px 5px 0;
+    }
+    h3 {
+        font-size: .9rem;
+        line-height: 1.5rem;
+        margin-bottom: 5px;
+        font-weight: 300;
+        margin-right: 50px;
+    }
+    li {
+        list-style: none;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+        margin: 0 0 5px 20px;
+    }
+}
+
+.tab {
+    position: relative;
+    margin-bottom: 1px;
+    width: 100%;
+    overflow: hidden;
+}
+.showtimeResultsInput {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+.showtimeResultsLabel {
+    position: relative;
+    display: block;
+    padding: 0 0 0 15px;
+    font-weight: bold;
+    line-height: 3;
+    border-top: 1px solid $body-color;
+    cursor: pointer;
+}
+
+.tab-content {
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height .35s;
+    -o-transition: max-height .35s;
+    transition: max-height .35s;
+}
+
+.tab-content li {
+    margin-bottom: 10px;
+}
+
+.showtimeResultsInput:checked ~ .tab-content {
+    max-height: 200px;
+}
+
+.showtimeResultsLabel:after {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    display: block;
+    font-size: 1rem;
+    width: 50px;
+    height: 50px;
+    line-height: 3;
+    text-align: center;
+    -webkit-transition: all .35s;
+    -o-transition: all .35s;
+    transition: all .35s;
+}
+
+input[type=checkbox] + label:after {
+    content: "▼";
+    color: $brand-green;
+}
+
+input[type=checkbox]:checked + label:after {
+    transform: rotateX(180deg);  
+}
