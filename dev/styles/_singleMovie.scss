@@ -5,6 +5,13 @@
         margin: 0 auto;
         display: block;
     }
+    font-size: 0.9rem;
+    line-height: 1.5em;
+}
+
+.liftingNav {
+    position: absolute;
+    z-index: 100;
 }
 
 .imgContainer,
@@ -20,6 +27,15 @@
 
 .description {
     float: right;
+}
+
+.addMovie {
+    background: #fff;
+    border: 0;
+    color: $brand-red;
+    position: absolute;
+    top: 50px;
+    right: 50px;
 }
 
 .imgContainer {
@@ -50,6 +66,7 @@
 
 .review,
 .movieDetails {
+    position: relative;
     padding: 50px 50px 0px;
     ;
     h2 {
@@ -68,7 +85,8 @@
         font-family: 'Lato', sans-serif;
         font-weight: 300;
         margin-bottom: 5px;
-        font-size: 1rem;
+        font-size: 1.2rem;
+        line-height: 1.5em;
     }
     a {
         color: $brand-red;

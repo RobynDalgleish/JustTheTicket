@@ -25,14 +25,10 @@ class SingleMovie extends React.Component {
 
     componentDidMount() {
         firebase.auth().onAuthStateChanged((user) => {
-            // console.log(user);
-            this.setState({
+            this.setState ({
                 user: user
             })
         })
-        // firebase.database().ref().on('value', (res) => {
-        //     // console.log(res);
-        // });
 
         //Connect to MovieDB for videos
         axios.get(`${config.movieDBApiURL}/movie/${this.props.match.params.movie_id}/videos`, {
@@ -55,7 +51,6 @@ class SingleMovie extends React.Component {
             }
         })
             .then(({ data }) => {
-                // console.log(data)
                 this.setState({
                     movieObject: data,
                     movieTitle: data.title,
@@ -71,7 +66,6 @@ class SingleMovie extends React.Component {
                     }
                 })
                     .then(({ data }) => {
-                        // console.log(data);
                         this.setState({
                             reviewObject: data.results[0],
                             reviewLink: data.results[0].link.url
@@ -92,9 +86,7 @@ class SingleMovie extends React.Component {
                     movieID: this.state.movieObject.id,
                     movieName: this.state.movieObject.title
                 }
-
-                // console.log(movieInfo);
-
+        
                 const movieDB = firebase.database().ref(`users/${this.state.user.uid}`);
 
                 movieDB.on('value', (snapshot) => {
@@ -107,9 +99,11 @@ class SingleMovie extends React.Component {
 
                     const testNewArray = movieArray.filter(movie => movie.movieName.includes(movieInfo.movieName));
 
-                    if (testNewArray.length <= 0) {
+                    if (testNewArray.length <= 0 ) {
                         movieDB.push(movieInfo);
-                        console.log(movieInfo);
+                        this.setState = {
+                            red: true
+                        }
                     }
 
 
@@ -122,61 +116,62 @@ class SingleMovie extends React.Component {
     render() {
         return (
             <div>
-                <Nav />
-                <div className="singleMovie clearfix" >
-
-                    <div className="imgContainer">
-                        <img src={`https://image.tmdb.org/t/p/w500/${this.state.movieObject.poster_path}`}
-                            alt={`Poster`} />
-                    </div>
-
-                    <ul className="pageLinks">
-                        <li><a href="#summary">Summary</a> | </li>
-                        <li><a href="#review">Review</a> | </li>
-                        <li><a href="#trailer">Trailer</a> | </li>
-                        <li><a href="#showtimes">Showtimes</a> </li>
-                    </ul>
-
-                    <div className="description">
-                        <div className="movieDetails" id="summary">
-                            <h2>{this.state.movieObject.title}</h2>
-                            <p>
-                                {this.state.reviewObject.mpaa_rating} |
-                                {this.state.movieObject.runtime} minutes
-                            </p>
-
-                            <button className="addMovie" onClick={this.addMovie} value={this.state.movieTitle}><i className="far fa-heart"></i></button>
-
-                            <h3>{this.state.movieObject.tagline}</h3>
-                            <p>{this.state.movieObject.overview}</p>
-                            <p><a href={this.state.movieObject.homepage} target="_blank">Visit the official website</a></p>
-                        </div>
-                        {/* {this.state.reviewObject.length === undefined ? 
-                        null 
-                        :
-                        } */}
-                        <div className="review" id="review">
-                            {this.state.reviewObject.critics_pick === 0
-                                ? null
-                                : <span>Critic's Pick</span>}
-                            <h2>{this.state.reviewObject.headline}</h2>
-                            {/* The name of a publication is meant to be italicized - style guide, hence <em> */}
-                            <p>{this.state.reviewObject.byline}, <em>New York Times</em></p>
-                            <p>{this.state.reviewObject.summary_short}</p>
-                            <a href={this.state.reviewLink} target="_blank">Read Review</a>
+                <div className="liftingNav">
+                    <Nav />
+                    <div className="singleMovie clearfix" >
+                        <div className="imgContainer">
+                            <img src={`https://image.tmdb.org/t/p/w500/${this.state.movieObject.poster_path}`}
+                                alt={`Poster`} />
                         </div>
 
-                        <div className="Trailer" id="trailer">
-                            <iframe width="560" height="315" src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                        <ul className="pageLinks">
+                            <li><a href="#summary">Summary</a> | </li>
+                            <li><a href="#review">Review</a> | </li>
+                            <li><a href="#trailer">Trailer</a> | </li>
+                            <li><a href="#showtimes">Showtimes</a> </li>
+                        </ul>
+
+                        <div className="description">
+                            <div className="movieDetails" id="summary">
+                                <h2>{this.state.movieObject.title}</h2>
+                                <p>
+                                    {this.state.reviewObject.mpaa_rating} |
+                                    {this.state.movieObject.runtime} minutes
+                                </p>
+
+                                <button className="addMovie" onClick={this.addMovie} value={this.state.movieTitle}><i className="far fa-heart"></i></button>
+
+                                <h3>{this.state.movieObject.tagline}</h3>
+                                <p>{this.state.movieObject.overview}</p>
+                                <p><a href={this.state.movieObject.homepage} target="_blank">Visit the official website</a></p>
+                            </div>
+                            {/* {this.state.reviewObject.length === undefined ? 
+                            null 
+                            :
+                            } */}
+                            <div className="review" id="review">
+                                {this.state.reviewObject.critics_pick === 0
+                                    ? null
+                                    : <span>Critic's Pick</span>}
+                                <h2>{this.state.reviewObject.headline}</h2>
+                                {/* The name of a publication is meant to be italicized - style guide, hence <em> */}
+                                <p>{this.state.reviewObject.byline}, <em>New York Times</em></p>
+                                <p>{this.state.reviewObject.summary_short}</p>
+                                <a href={this.state.reviewLink} target="_blank">Read Review</a>
+                            </div>
+
+                            <div className="Trailer" id="trailer">
+                                <iframe width="560" height="315" src={this.state.youtubeKey} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                            </div>
                         </div>
-                    </div>
-                    <div className="theatreLocationsWrapper">
-                        {
-                            // Making sure the TheaterLocations component has the movie information before calling a function on componentDidMount in that component. Once we update this state with a movie title (waiting for the api data to cpme back), React will check the render method again
-                            this.state.movieTitle
-                                ? <TheatreLocations movieTitle={this.state.movieTitle} />
-                                : null
-                        }
+                        <div className="theatreLocationsWrapper">
+                            {
+                                // Making sure the TheaterLocations component has the movie information before calling a function on componentDidMount in that component. Once we update this state with a movie title (waiting for the api data to cpme back), React will check the render method again
+                                this.state.movieTitle
+                                    ? <TheatreLocations movieTitle={this.state.movieTitle} />
+                                    : null
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
