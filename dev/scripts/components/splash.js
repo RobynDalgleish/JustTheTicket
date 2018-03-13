@@ -4,7 +4,6 @@ import GenreDropDown from './genreDropDown';
 import SearchResults from './SearchResults';
 import axios from 'axios';
 import config from './config.js';
-import Footer from './footer';
 import { Link } from 'react-router-dom';
 
 class Splash extends React.Component {
@@ -36,11 +35,11 @@ class Splash extends React.Component {
 }
 
     render () {
-        // console.log('this props', this.props)
+
         return(
             <div className="splash">
 
-            <div className="halfPage">
+                <section className="halfPage">
                     <div className="splashWrapper">
                         <div className="handleUser">
                             <HandleUser />
@@ -49,17 +48,19 @@ class Splash extends React.Component {
                             <img src="./images/yellowticket.svg" alt="logo" />
                             <h1>Just<br/>the<br/>Ticket</h1>
                         </div>
-                        <h4>What do you want to see?</h4>
+                        <div className="genre">
+                            <h4>What do you want to see?</h4>
                             <GenreDropDown dropdownChange={this.props.dropdownChange} history={this.props.history} />
+                        </div>
                     </div>
-                    <Footer />
-                </div>
 
-                <div className="posterWrapper">
+                </section>
+
+                <section className="posterWrapper">
                     <Link to={this.state.randoDetailsLink}>
                         <img src={this.state.randoPosterURL} alt="Check this one out"/>
                     </Link>
-                </div>
+                </section>
                 
             </div>
         )
