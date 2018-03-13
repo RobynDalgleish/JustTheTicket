@@ -36,23 +36,21 @@ class Splash extends React.Component {
 }
 
     render () {
-        // console.log('this props', this.props)
         return(
             <div className="splash">
-
-            <div className="halfPage">
+                <div className="halfPage">
+                    <div>
+                        <HandleUser />
+                    </div>
                     <div className="splashWrapper">
-                        <div className="handleUser">
-                            <HandleUser />
-                        </div>
                         <div className="brandName">
                             <img src="./images/yellowticket.svg" alt="logo" />
                             <h1>Just<br/>the<br/>Ticket</h1>
                         </div>
                         <h4>What do you want to see?</h4>
-                            <GenreDropDown dropdownChange={this.props.dropdownChange} history={this.props.history} />
+                        <GenreDropDown dropdownChange={this.props.dropdownChange} history={this.props.history} />
+                        <Footer />
                     </div>
-                    <Footer />
                 </div>
 
                 <div className="posterWrapper">
@@ -60,7 +58,6 @@ class Splash extends React.Component {
                         <img src={this.state.randoPosterURL} alt="Check this one out"/>
                     </Link>
                 </div>
-                
             </div>
         )
     }
