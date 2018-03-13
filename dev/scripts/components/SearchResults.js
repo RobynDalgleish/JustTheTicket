@@ -3,6 +3,7 @@ import Nav from './nav';
 import axios from 'axios';
 import config from './config.js';
 import { Link } from 'react-router-dom';
+import GenreDropDown from './genreDropDown';
 import Footer from './footer';
 
 class SearchResults extends React.Component {
