@@ -78,7 +78,6 @@ class HandleUser extends React.Component {
         this.modal.classList.toggle('show');
     }
     removeFav(favID){
-        console.log(favID);
         const dbRef = firebase.database().ref(`users/${this.state.user.uid}/${favID}`);
         dbRef.remove();
     }
@@ -87,12 +86,12 @@ class HandleUser extends React.Component {
             <div className="handleUser">
                 {
                     this.state.loggedIn ?
-                    <div className="loggedIn">
-                        <button className="signout" onClick={this.signOut}>Sign Out</button>
-                        <button className="favourites" onClick={this.toggleFavourites}>Favourites</button>
+                    <div className="loggedIn"> 
+                            <button className="favourites" onClick={this.toggleFavourites}><i className="fas fa-heart"></i></button>
+                            <button className="signout" onClick={this.signOut}><i className="fas fa-sign-out-alt"></i></button>
                     </div>
                     :
-                    <button className="createAccount" onClick={this.signIn}>Login/Create Account</button>
+                    <button className="createAccount" onClick={this.signIn}>Log In/Sign Up</button>
                 }
                     <div className="overlay" ref={ref => this.overlay = ref}></div>
                     <div className="modal" ref={ref => this.modal = ref}>
